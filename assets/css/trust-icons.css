@@ -1,0 +1,42 @@
+.trust-strip > div > div::before {
+  display: none;
+}
+
+.trust-pillar {
+  display: flex !important;
+  min-height: 96px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  padding: .65rem;
+  color: #111;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.trust-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  color: var(--copper);
+  transition: .25s;
+}
+
+.trust-icon svg {
+  width: 31px;
+  height: 31px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trust-pillar:hover .trust-icon {
+  color: var(--pine);
+  transform: translateY(-3px);
+}

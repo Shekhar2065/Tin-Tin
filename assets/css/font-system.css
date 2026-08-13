@@ -1,0 +1,26 @@
+body {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-display,
+.gallery-tile b,
+.footer-scene-copy strong,
+.review-number,
+.review-card h3,
+.offer-body h3 {
+  font-family: 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -.04em;
+  font-weight: 800;
+}
+
+.font-display em {
+  font-weight: 600;
+}
+
+.offer-body h3 {
+  letter-spacing: -.025em;
+}
+
+.review-number {
+  font-weight: 600;
+}
