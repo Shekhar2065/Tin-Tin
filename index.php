@@ -36,33 +36,53 @@ $featuredActivities = [
 ];
 require __DIR__ . '/includes/header.php';
 ?>
-<section class="home-hero planner-hero relative min-h-[680px] overflow-hidden bg-ink text-white md:min-h-[720px]">
-  <img src="<?= url('assets/images/everest-hero.png') ?>" class="absolute inset-0 h-full w-full object-cover object-center" alt="Trekkers walking beneath Himalayan peaks at dawn">
-  <div class="hero-shade absolute inset-0"></div>
-  <div class="site-shell relative flex min-h-[680px] items-center pb-40 pt-20 md:min-h-[720px] md:pb-44">
-    <div class="hero-copy max-w-3xl">
-      <p class="hero-kicker mb-6 text-[10px] font-bold uppercase tracking-[.18em] text-white">Personal journeys · Nepal, Bhutan & Tibet</p>
-      <h1 class="font-display text-5xl leading-[.94] text-white sm:text-6xl md:text-7xl lg:text-[5.3rem]">Nepal trekking, tours<br><em class="text-[#91D2B6]">and Himalayan adventure.</em></h1>
-      <p class="mt-7 max-w-2xl text-base leading-7 text-slate-200 md:text-lg">Explore trusted routes, then tell us your budget and priorities. We’ll turn them into a personal Himalayan plan.</p>
-      <div class="mt-9 flex flex-col gap-3 sm:flex-row"><a class="btn-light" href="<?= url('budget-plan.php') ?>">Get My Budget Plan</a><a class="btn-outline" href="#treks">Explore Treks</a></div>
-      <p class="mt-8 flex items-center gap-3 text-xs font-semibold tracking-wide text-slate-300"><span class="h-px w-8 bg-slate-400"></span>Designed locally in Kathmandu, one considered detail at a time.</p>
+<section class="home-hero reference-hero">
+  <img src="<?= url('assets/images/everest-hero.png') ?>" class="reference-hero-image" alt="Trekkers walking beneath Himalayan peaks at dawn">
+  <div class="reference-hero-shade" aria-hidden="true"></div>
+
+  <div class="site-shell reference-hero-inner">
+    <div class="reference-hero-copy">
+      <p class="reference-hero-eyebrow">Personal journeys across Nepal, Bhutan &amp; Tibet</p>
+      <h1>Experience the Difference!<strong>Discover the Himalaya.</strong></h1>
+      <p>Thoughtful trekking and tours, shaped by local experts around your pace, interests and budget.</p>
+
+      <form class="hero-trip-search" action="<?= url('budget-plan.php') ?>" method="get" role="search">
+        <label class="sr-only" for="hero-trip-query">Search trips</label>
+        <input id="hero-trip-query" name="trek" type="search" placeholder="Search trips, destinations and activities" autocomplete="off">
+        <button type="submit" aria-label="Search trips">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16.5 16.5 4 4"></path></svg>
+        </button>
+      </form>
     </div>
-    <form class="trip-finder" action="<?= url('budget-plan.php') ?>" method="get">
-      <div class="trip-finder-heading"><span>Find your journey</span><small>Start with an idea. We’ll personalize the rest.</small></div>
-      <label><span>Destination</span><select name="destination"><option>Nepal</option><option>Bhutan</option><option>Tibet</option><option>Not sure</option></select></label>
-      <label><span>Activity</span><select name="trek"><option value="Not sure — recommend something">All activities</option><option>Trekking</option><option>Camping</option><option>Mountain Biking</option><option>Peak Climbing</option><option>Cultural Tour</option></select></label>
-      <label><span>Duration</span><select name="duration"><option>Any duration</option><option>Under 7 days</option><option>7–12 days</option><option>13–18 days</option><option>19+ days</option></select></label>
-      <button type="submit">Plan my trip <span>→</span></button>
-    </form>
-  </div>
-</section>
-<section class="trust-strip border-b border-slate-200">
-  <div class="site-shell grid grid-cols-2 divide-x divide-slate-200 py-5 text-center md:grid-cols-5">
-    <div class="trust-pillar"><span class="trust-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 25L11 12l5 7 4-10 9 16M8 25h20"/><path d="M19 12l2 2 3-4"/></svg></span><span>Local Himalayan Expertise</span></div>
-    <div class="trust-pillar"><span class="trust-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="9" r="4"/><path d="M9 27v-7c0-4 3-7 7-7s7 3 7 7v7M12 18l4 3 4-3"/><path d="M24 13l3 3-5 5"/></svg></span><span>Experienced Guides</span></div>
-    <div class="trust-pillar"><span class="trust-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l11 4v8c0 7-4 11-11 14C9 26 5 22 5 15V7l11-4z"/><path d="M10 16l4 4 8-9"/></svg></span><span>Safety First</span></div>
-    <div class="trust-pillar"><span class="trust-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 6h9l3 3h10v17H5V6z"/><path d="M9 21l5-6 4 3 5-6"/><circle cx="9" cy="21" r="1.5"/><circle cx="23" cy="12" r="1.5"/></svg></span><span>Personalized Itineraries</span></div>
-    <div class="trust-pillar last:col-span-2 md:last:col-span-1"><span class="trust-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 17a10 10 0 0120 0"/><path d="M6 17v7h5v-9H6m20 2v7h-5v-9h5M21 27h-5"/><circle cx="14" cy="27" r="2"/></svg></span><span>Dedicated Support</span></div>
+
+    <div class="hero-stats" aria-label="Why travel with Tin-Tin Trekking">
+      <div class="hero-stat">
+        <svg class="hero-stat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path>
+          <path d="m17 12.5 1.8 1.8 3.2-3.6"></path>
+        </svg>
+        <p><strong>35+ Years</strong><span>of Experience</span></p>
+      </div>
+      <div class="hero-stat">
+        <svg class="hero-stat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M3 20 9 9l3.5 5 3-7L22 20"></path>
+          <path d="M5 20h17"></path>
+          <path d="m16 10 1.5 1.5L20 8.5"></path>
+        </svg>
+        <p><strong>Professional</strong><span>Guides</span></p>
+      </div>
+      <div class="hero-stat">
+        <svg class="hero-stat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M4 13a8 8 0 0 1 16 0"></path>
+          <path d="M4 13v5h3v-6H4"></path>
+          <path d="M20 13v5h-3v-6h3"></path>
+          <path d="M17 20h-4"></path>
+          <circle cx="11.5" cy="20" r="1.5"></circle>
+        </svg>
+        <p><strong>Experienced</strong><span>Counselors</span></p>
+      </div>
+    </div>
   </div>
 </section>
 
