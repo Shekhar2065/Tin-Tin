@@ -93,19 +93,24 @@ require __DIR__ . '/includes/header.php';
       <p class="max-w-2xl text-lg leading-8 lg:justify-self-end">Trek between high villages, camp in remote country, ride mountain trails, explore living culture or ask us to shape something entirely personal.</p>
     </div>
     <div class="offer-tabs mt-12" role="tablist" aria-label="Featured activity categories">
-      <button class="offer-tab active" data-offer-filter="trekking" role="tab" aria-selected="true" aria-controls="activity-panel-trekking"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 25L12 12l4 6 4-9 8 16M8 25h20"/></svg><span>Trekking</span><small>Classic journeys</small></button>
-      <button class="offer-tab" data-offer-filter="camping" role="tab" aria-selected="false" aria-controls="activity-panel-camping"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 26L16 7l13 19M9 26l7-11 7 11M16 7v19"/></svg><span>Camping</span><small>Remote routes</small></button>
-      <button class="offer-tab" data-offer-filter="cycling" role="tab" aria-selected="false" aria-controls="activity-panel-cycling"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="8" cy="22" r="5"/><circle cx="24" cy="22" r="5"/><path d="M8 22l6-10 5 10H8l7-7h5M13 9h5"/></svg><span>Cycling</span><small>Mountain & valley</small></button>
-      <button class="offer-tab" data-offer-filter="climbing" role="tab" aria-selected="false" aria-controls="activity-panel-climbing"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 26L12 9l5 8 4-11 8 20M11 12l3 1 2-3M21 9l3 3"/></svg><span>Peak climbing</span><small>Guided programs</small></button>
-      <button class="offer-tab" data-offer-filter="culture" role="tab" aria-selected="false" aria-controls="activity-panel-culture"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V14h16v13M6 14h20l-3-4H9l-3 4zM12 10l4-5 4 5M13 18v5m6-5v5"/></svg><span>Culture & tours</span><small>Nepal, Bhutan, Tibet</small></button>
+      <button class="offer-tab active" data-offer-filter="trekking" role="tab" aria-selected="true" aria-controls="activity-panel-trekking"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M18 3c1 6-4 7-4 12 0 2 1 4 3 5-1-5 4-6 5-10 4 4 6 8 6 12a11 11 0 1 1-22 0c0-5 3-9 7-13-1 6 1 8 3 9-1-6 4-8 2-15Z"/></svg><span>Best Sellers for 2026</span></button>
+      <button class="offer-tab" data-offer-filter="camping" role="tab" aria-selected="false" aria-controls="activity-panel-camping"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m4 9 6-5h12l6 5-12 19L4 9Zm0 0h24M10 4l6 24 6-24"/></svg><span>Luxury &amp; Remote</span></button>
+      <button class="offer-tab" data-offer-filter="cycling" role="tab" aria-selected="false" aria-controls="activity-panel-cycling"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="8" cy="22" r="5"/><circle cx="24" cy="22" r="5"/><path d="M8 22l6-10 5 10H8l7-7h5M13 9h5"/></svg><span>Mountain Biking</span></button>
+      <button class="offer-tab" data-offer-filter="climbing" role="tab" aria-selected="false" aria-controls="activity-panel-climbing"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 26L12 9l5 8 4-11 8 20M11 12l3 1 2-3M21 9l3 3"/></svg><span>Peak Climbing</span></button>
+      <button class="offer-tab" data-offer-filter="culture" role="tab" aria-selected="false" aria-controls="activity-panel-culture"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V14h16v13M6 14h20l-3-4H9l-3 4zM12 10l4-5 4 5M13 18v5m6-5v5"/></svg><span>Culture &amp; Tours</span></button>
     </div>
     <?php foreach ($featuredActivities as $categoryKey => $items): ?>
     <div id="activity-panel-<?= e($categoryKey) ?>" class="offer-panel <?= $categoryKey === 'trekking' ? '' : 'hidden' ?>" data-offer-panel="<?= e($categoryKey) ?>" role="tabpanel">
       <div class="offer-grid">
         <?php foreach ($items as $item): ?>
         <article class="offer-card">
-          <a href="<?= url($item[6]) ?>" class="offer-image"><img loading="lazy" src="<?= url($item[4]) ?>" alt="<?= e($item[0]) ?> landscape"><span><?= e(ucfirst($categoryKey)) ?></span></a>
-          <div class="offer-body"><p class="offer-region"><?= e($item[1]) ?></p><h3><a href="<?= url($item[6]) ?>"><?= e($item[0]) ?></a></h3><div class="offer-meta"><span><b><?= e($item[2]) ?></b> Duration</span><span><b><?= e($item[3]) ?></b> Style</span></div><p class="offer-summary"><?= e($item[5]) ?></p><div class="offer-footer"><span>Custom plan</span><a href="<?= url($item[6]) ?>">Explore <b>→</b></a></div></div>
+          <a href="<?= url($item[6]) ?>" class="offer-image"><img loading="lazy" src="<?= url($item[4]) ?>" alt="<?= e($item[0]) ?> landscape"></a>
+          <div class="offer-body">
+            <p class="activity-card-duration"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M7 3v4M17 3v4M3 10h18M8 14h2M14 14h2M8 18h2"></path></svg><span><?= e($item[2]) ?></span></p>
+            <h3><a href="<?= url($item[6]) ?>"><?= e($item[0]) ?></a></h3>
+            <p class="activity-card-region"><?= e($item[1]) ?> <span aria-hidden="true">&middot;</span> <?= e($item[3]) ?></p>
+            <div class="offer-footer"><span>Personalized quote</span><a href="<?= url($item[6]) ?>">View trip <b>&rarr;</b></a></div>
+          </div>
         </article>
         <?php endforeach; ?>
       </div>
@@ -291,6 +296,40 @@ require __DIR__ . '/includes/header.php';
     </div>
 
     <p class="mt-5 text-xs leading-5 text-slate-500">Exact profile URLs, ratings and review counts can be connected when verified listing links are supplied.</p>
+  </div>
+</section>
+
+<section id="faq" class="home-faq-section" aria-labelledby="home-faq-title">
+  <div class="site-shell home-faq-layout">
+    <div class="home-faq-intro">
+      <p class="eyebrow text-pine">Frequently asked questions</p>
+      <h2 id="home-faq-title">Planning your Himalayan journey</h2>
+      <p>Clear answers about personalized trips, timing, guides and what happens after you contact us.</p>
+      <a class="btn-primary" href="<?= url('contact.php') ?>">Ask a different question <span aria-hidden="true">&nearr;</span></a>
+    </div>
+
+    <div class="home-faq-list" data-accordion>
+      <?php
+      $homeFaqs = [
+        ['How does personalized trip pricing work?', 'Your proposal is shaped around your dates, group size, route, accommodation and transport preferences. We explain the confirmed inclusions before you decide whether to book.'],
+        ['When is the best time to trek in Nepal?', 'Spring and autumn are common planning seasons for many routes, but the best window depends on the region, altitude and type of journey. We recommend dates after learning which trip interests you.'],
+        ['Can beginners plan a Himalayan trek?', 'Yes. We can recommend realistic routes and pacing based on your experience, available time and preferred comfort. Some high-altitude or technical trips require stronger preparation.'],
+        ['Are trips private or group based?', 'Our planning is personalized. Your proposal can be designed for a private traveler, couple, family or group, with guide and support arrangements matched to the confirmed itinerary.'],
+        ['What is normally included in a proposal?', 'The final proposal clearly lists the planned accommodation, guides, permits, core transport and other confirmed services. Anything not included is shown separately.'],
+        ['How do I start planning with Tin-Tin Trekking?', 'Send your dates, group details, interests and budget range through the planning form. We will review them and follow up with practical recommendations.'],
+      ];
+      foreach ($homeFaqs as $i => $faq):
+      ?>
+      <div class="accordion-item <?= $i === 0 ? 'open' : '' ?>">
+        <button class="accordion-button" type="button" aria-expanded="<?= $i === 0 ? 'true' : 'false' ?>">
+          <span class="home-faq-number"><?= str_pad((string)($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
+          <span class="home-faq-question"><?= e($faq[0]) ?></span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content"><p><?= e($faq[1]) ?></p></div>
+      </div>
+      <?php endforeach; ?>
+    </div>
   </div>
 </section>
 

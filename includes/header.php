@@ -15,13 +15,14 @@ $pageDescription = $pageDescription ?? 'Personalized Himalayan adventures design
   <meta property="og:type" content="website">
   <meta property="og:image" content="<?= url('assets/images/everest-hero.png') ?>">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={theme:{extend:{colors:{ink:'#123B5D',pine:'#237A57',leaf:'#46936F',mist:'#F5F8FA',sand:'#B8D5E5',ember:'#237A57'},fontFamily:{sans:['Inter','ui-sans-serif','system-ui'],display:['Plus Jakarta Sans','Inter','ui-sans-serif','system-ui']}}}}</script>
-  <link rel="stylesheet" href="<?= url('assets/css/site.css') ?>">
-  <link rel="stylesheet" href="<?= url('assets/css/trust-icons.css') ?>">
-  <link rel="stylesheet" href="<?= url('assets/css/planner-layout.css') ?>">
-  <link rel="stylesheet" href="<?= url('assets/css/font-system.css') ?>">
-  <link rel="stylesheet" href="<?= url('assets/css/minimal-theme.css') ?>">
-  <link rel="stylesheet" href="<?= url('assets/css/footer.css') ?>">
+  <script>tailwind.config={theme:{extend:{colors:{ink:'#123B5D',pine:'#237A57',leaf:'#46936F',mist:'#FFFFFF',sand:'#B8D5E5',ember:'#237A57'},fontFamily:{sans:['Inter','ui-sans-serif','system-ui'],display:['Space Grotesk','Inter','ui-sans-serif','system-ui'],ui:['Geist','Inter','ui-sans-serif','system-ui']}}}}</script>
+  <link rel="stylesheet" href="<?= asset_url('assets/css/site.css') ?>">
+  <link rel="stylesheet" href="<?= asset_url('assets/css/trust-icons.css') ?>">
+  <link rel="stylesheet" href="<?= asset_url('assets/css/planner-layout.css') ?>">
+  <link rel="stylesheet" href="<?= asset_url('assets/css/font-system.css') ?>">
+  <link rel="stylesheet" href="<?= asset_url('assets/css/minimal-theme.css') ?>">
+  <link rel="stylesheet" href="<?= asset_url('assets/css/footer.css') ?>">
+  <link rel="stylesheet" href="<?= asset_url('assets/css/polish.css') ?>">
 </head>
 <body class="bg-white text-slate-700 antialiased">
 <a href="#main" class="skip-link">Skip to content</a>

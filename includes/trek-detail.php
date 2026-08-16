@@ -1,17 +1,138 @@
 <?php
 require_once __DIR__ . '/../data/treks.php';
 if (!isset($slug, $treks[$slug])) { http_response_code(404); exit('Trek not found'); }
+
 $trek = $treks[$slug];
 $pageTitle = $trek['title'];
 $pageDescription = $trek['summary'];
+$routePoints = $trek['start'] === $trek['end']
+    ? $trek['start']
+    : $trek['start'] . ' / ' . $trek['end'];
+$tripFacts = [
+    ['country', 'Country', 'Nepal'],
+    ['calendar', 'Duration', $trek['duration']],
+    ['gauge', 'Difficulty', $trek['difficulty']],
+    ['activity', 'Activity', 'Trekking / Hiking'],
+    ['mountain', 'Max. altitude', $trek['altitude']],
+    ['season', 'Best season', $trek['season']],
+    ['bed', 'Accommodation', 'Tea houses & hotels'],
+    ['meal', 'Meals', 'Set with your plan'],
+    ['route', 'Start / End point', $routePoints],
+    ['private', 'Trip style', 'Private & personalized'],
+    ['guide', 'Guide', 'Experienced local guide'],
+    ['price', 'Pricing', 'Personalized proposal'],
+];
+
 require __DIR__ . '/header.php';
 ?>
-<section class="relative min-h-[620px] bg-ink text-white"><img src="<?= url($trek['image']) ?>" class="absolute inset-0 h-full w-full object-cover" alt="<?= e($trek['title']) ?> mountain landscape"><div class="hero-shade absolute inset-0"></div><div class="site-shell relative flex min-h-[620px] items-end py-16"><div class="max-w-4xl"><nav class="mb-5 text-xs text-slate-300" aria-label="Breadcrumb"><a href="<?= url('index.php') ?>">Home</a> / <a href="<?= url('index.php#treks') ?>">Treks</a> / <?= e($trek['title']) ?></nav><p class="eyebrow text-emerald-200"><?= e($trek['region']) ?></p><h1 class="mt-3 font-display text-5xl leading-none text-white md:text-7xl"><?= e($trek['title']) ?></h1><p class="mt-5 max-w-2xl text-lg leading-7 text-slate-200"><?= e($trek['summary']) ?></p><a class="btn-light mt-8" href="<?= url('budget-plan.php?trek='.urlencode($trek['title'])) ?>">Get My Budget Plan</a></div></div></section>
-<section class="border-b bg-white"><div class="site-shell grid grid-cols-2 divide-x divide-y border-x border-slate-200 sm:grid-cols-3 lg:grid-cols-6 lg:divide-y-0"><?php $facts=[['Duration',$trek['duration']],['Difficulty',$trek['difficulty']],['Max altitude',$trek['altitude']],['Start',$trek['start']],['Best season',$trek['season']],['Pricing','Custom quote']];foreach($facts as $fact):?><div class="p-5"><p class="eyebrow text-slate-400"><?= e($fact[0]) ?></p><p class="mt-2 text-sm font-bold text-ink"><?= e($fact[1]) ?></p></div><?php endforeach;?></div></section>
-<section class="bg-white py-5" aria-label="Trek gallery"><div class="site-shell grid h-[420px] grid-cols-2 gap-2 md:grid-cols-4"><figure class="col-span-2 row-span-2 overflow-hidden"><img src="<?= url($trek['image']) ?>" class="h-full w-full object-cover" alt="Main view along the <?= e($trek['title']) ?> route"></figure><figure class="overflow-hidden"><img loading="lazy" src="<?= url('assets/images/annapurna.png') ?>" class="h-full w-full object-cover" alt="Himalayan forest and mountain trail"></figure><figure class="overflow-hidden"><img loading="lazy" src="<?= url('assets/images/manaslu.png') ?>" class="h-full w-full object-cover" alt="Remote Nepal mountain valley"></figure><figure class="col-span-2 overflow-hidden"><img loading="lazy" src="<?= url('assets/images/everest-hero.png') ?>" class="h-full w-full object-cover object-bottom" alt="High Himalayan mountain path at dawn"></figure></div></section>
-<section class="py-16 md:py-24"><div class="site-shell grid gap-12 lg:grid-cols-[1fr_340px]"><div><p class="eyebrow text-pine">The journey</p><h2 class="mt-3 font-display text-4xl text-ink md:text-5xl">Overview</h2><p class="mt-7 text-lg leading-8"><?= e($trek['overview']) ?></p><h2 class="mt-14 font-display text-3xl text-ink">Highlights</h2><ul class="mt-6 grid gap-4 sm:grid-cols-2"><?php foreach($trek['highlights'] as $highlight):?><li class="flex gap-3 border-t border-slate-200 pt-4"><span class="text-pine">◆</span><?= e($highlight) ?></li><?php endforeach;?></ul></div><aside class="h-fit bg-mist p-7 lg:sticky lg:top-28"><p class="eyebrow text-pine">Made for you</p><h3 class="mt-3 font-display text-3xl text-ink">No one-size-fits-all price.</h3><p class="mt-4 text-sm leading-6">Tell us your dates, group and comfort preferences. We’ll design a clear proposal around them.</p><a class="btn-primary mt-6 w-full text-xs" href="<?= url('budget-plan.php?trek='.urlencode($trek['title'])) ?>">Get My Budget Plan</a><a class="mt-4 block text-center text-xs font-bold text-pine" href="<?= e(whatsapp_url("Hello Tin-Tin Trekking, I'm interested in the {$trek['title']}.")) ?>" target="_blank" rel="noopener">Talk on WhatsApp</a></aside></div></section>
-<section class="bg-mist py-16 md:py-24"><div class="site-shell grid gap-10 lg:grid-cols-[.65fr_1.35fr]"><div><p class="eyebrow text-pine">Day by day</p><h2 class="mt-3 font-display text-4xl text-ink md:text-5xl">A considered pace</h2><p class="mt-5 leading-7">This sample route is a planning foundation. Your final itinerary may adapt to dates, conditions and preferences.</p></div><div data-accordion><?php foreach($trek['itinerary'] as $i=>$day):?><div class="accordion-item border-t border-slate-300 <?= $i===0?'open':'' ?>"><button class="accordion-button flex w-full items-center gap-5 py-5 text-left" aria-expanded="<?= $i===0?'true':'false' ?>"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-xs font-bold text-pine"><?= $i+1 ?></span><span class="flex-1 font-bold text-ink"><?= e($day[0]) ?></span><span class="accordion-icon text-xl">+</span></button><div class="accordion-content pb-6 pl-[3.75rem] leading-7"><?= e($day[1]) ?></div></div><?php endforeach;?></div></div></section>
-<section class="py-16 md:py-24"><div class="site-shell"><div class="grid gap-10 lg:grid-cols-2"><div><p class="eyebrow text-pine">Route & altitude</p><h2 class="mt-3 font-display text-4xl text-ink">Climb steadily. Adapt deliberately.</h2><div class="mt-7 border border-slate-200 bg-mist p-6" aria-label="Illustrative altitude profile"><div class="relative h-40 overflow-hidden border-b border-slate-400"><div class="absolute bottom-5 left-0 h-1 w-[28%] origin-left -rotate-6 bg-pine"></div><div class="absolute bottom-[57px] left-[25%] h-1 w-[34%] origin-left -rotate-[13deg] bg-pine"></div><div class="absolute bottom-[120px] left-[55%] h-1 w-[22%] origin-left rotate-[8deg] bg-pine"></div><div class="absolute bottom-[92px] right-0 h-1 w-[28%] origin-right -rotate-[19deg] bg-pine"></div><span class="absolute bottom-2 left-0 text-[10px] font-bold"><?= e($trek['start']) ?></span><span class="absolute right-[18%] top-0 text-[10px] font-bold"><?= e($trek['altitude']) ?></span><span class="absolute bottom-2 right-0 text-[10px] font-bold"><?= e($trek['end']) ?></span></div><p class="mt-3 text-xs text-slate-500">Illustrative profile—not a navigation chart. Your final plan contains route-specific details.</p></div><div class="mt-7 space-y-5 leading-7"><p><b class="text-ink">Difficulty.</b> Rated <?= e(strtolower($trek['difficulty'])) ?>. Daily distance, elevation, conditions and your preparation all matter.</p><p><b class="text-ink">Best season.</b> <?= e($trek['season']) ?> is the usual planning window, though conditions vary each year.</p></div></div><div class="grid gap-6 sm:grid-cols-2"><div class="border border-slate-200 p-7"><h3 class="font-display text-2xl text-ink">What’s included</h3><ul class="mt-5 space-y-3 text-sm"><?php foreach($trek['included'] as $item):?><li class="flex gap-2"><span class="text-pine">✓</span><?= e($item) ?></li><?php endforeach;?></ul></div><div class="border border-slate-200 p-7"><h3 class="font-display text-2xl text-ink">Not included</h3><ul class="mt-5 space-y-3 text-sm"><?php foreach($trek['excluded'] as $item):?><li class="flex gap-2"><span class="text-ember">–</span><?= e($item) ?></li><?php endforeach;?></ul></div></div></div></div></section>
-<section class="bg-ink py-16 text-white" id="comfort"><div class="site-shell"><p class="eyebrow text-emerald-200">Comfort options</p><h2 class="mt-3 font-display text-4xl text-white">Choose where the extra comfort matters.</h2><div class="mt-9 grid gap-px bg-white/15 md:grid-cols-3"><?php $opts=[['Standard','Essential teahouses, shared options and core transport.'],['Comfort','Better lodge selection, hotel upgrade and more privacy.'],['Luxury','Premium rooms, enhanced service and private transport where applicable.']];foreach($opts as $o):?><div class="bg-ink p-7"><h3 class="font-display text-2xl text-white"><?= e($o[0]) ?></h3><p class="my-5 text-sm leading-6 text-slate-300"><?= e($o[1]) ?></p><a class="text-xs font-bold uppercase text-emerald-300" href="<?= url('budget-plan.php?trek='.urlencode($trek['title']).'&comfort='.strtolower($o[0])) ?>">Get My Budget Plan →</a></div><?php endforeach;?></div></div></section>
-<section class="py-16 md:py-24"><div class="site-shell grid gap-10 lg:grid-cols-[.7fr_1.3fr]"><div><p class="eyebrow text-pine">Trip questions</p><h2 class="mt-3 font-display text-4xl text-ink">Before you set out</h2><div class="mt-8 border-l-2 border-sand bg-mist p-5"><p class="eyebrow text-slate-500">Review placeholder</p><p class="mt-3 text-sm leading-6">Verified guest reviews can be added here when supplied by the client. No demo review is presented as a real testimonial.</p></div></div><div data-accordion><?php foreach($trek['faqs'] as $i=>$faq):?><div class="accordion-item border-t border-slate-300 <?= $i===0?'open':'' ?>"><button class="accordion-button flex w-full justify-between gap-5 py-5 text-left font-bold text-ink" aria-expanded="<?= $i===0?'true':'false' ?>"><span><?= e($faq[0]) ?></span><span class="accordion-icon">+</span></button><div class="accordion-content pb-5 leading-7"><?= e($faq[1]) ?></div></div><?php endforeach;?></div></div></section>
+<svg class="trip-icon-sprite" aria-hidden="true">
+  <symbol id="trip-icon-country" viewBox="0 0 48 48"><circle cx="22" cy="24" r="15"></circle><path d="M7 24h30M22 9c-5 5-7 10-7 15s2 10 7 15M22 9c5 5 7 10 7 15M30 34l7 7 7-7a7 7 0 1 0-14 0Z"></path></symbol>
+  <symbol id="trip-icon-calendar" viewBox="0 0 48 48"><rect x="8" y="11" width="32" height="30" rx="2"></rect><path d="M15 7v8M33 7v8M8 19h32M15 29l5 5 12-12"></path></symbol>
+  <symbol id="trip-icon-gauge" viewBox="0 0 48 48"><path d="M7 33a17 17 0 0 1 34 0M24 31l9-11"></path><circle cx="24" cy="31" r="2"></circle></symbol>
+  <symbol id="trip-icon-activity" viewBox="0 0 48 48"><circle cx="28" cy="8" r="3"></circle><path d="m22 15 8 5 7 1M22 15l-5 12-8 1M25 19l-2 12-7 10M23 31l10 9M13 19l6-2"></path></symbol>
+  <symbol id="trip-icon-mountain" viewBox="0 0 48 48"><path d="m6 40 13-25 8 14 5-9 10 20H6ZM15 23l4 4 4-4M30 24l3 4 3-2"></path></symbol>
+  <symbol id="trip-icon-season" viewBox="0 0 48 48"><path d="M15 35h22a7 7 0 0 0 0-14 12 12 0 0 0-22-3 8.5 8.5 0 0 0 0 17ZM10 8v4M3 15h4M8 10l3 3M13 40v3M24 40v3M35 40v3"></path></symbol>
+  <symbol id="trip-icon-bed" viewBox="0 0 48 48"><path d="M7 39V15M7 31h35v8M13 22h12a6 6 0 0 1 6 6v3H13v-9ZM7 39v4M42 39v4"></path><circle cx="14" cy="17" r="3"></circle></symbol>
+  <symbol id="trip-icon-meal" viewBox="0 0 48 48"><circle cx="26" cy="25" r="13"></circle><path d="M8 7v15M5 7v8c0 3 6 3 6 0V7M8 22v19M43 7c-5 3-5 13-1 17v17"></path></symbol>
+  <symbol id="trip-icon-route" viewBox="0 0 48 48"><path d="M8 39c8-8 16 5 32-7" stroke-dasharray="3 3"></path><path d="M6 20c0 7 7 13 7 13s7-6 7-13a7 7 0 1 0-14 0ZM30 10c0 5 5 9 5 9s5-4 5-9a5 5 0 1 0-10 0Z"></path></symbol>
+  <symbol id="trip-icon-private" viewBox="0 0 48 48"><circle cx="17" cy="15" r="6"></circle><circle cx="34" cy="18" r="5"></circle><path d="M6 40c0-9 5-15 11-15s11 6 11 15M27 28c2-3 4-5 7-5 5 0 9 6 9 14"></path></symbol>
+  <symbol id="trip-icon-guide" viewBox="0 0 48 48"><circle cx="24" cy="13" r="7"></circle><path d="M11 41c1-11 6-18 13-18s12 7 13 18M17 26l7 7 7-7M15 8l9-4 9 4"></path></symbol>
+  <symbol id="trip-icon-price" viewBox="0 0 48 48"><rect x="6" y="11" width="36" height="27" rx="3"></rect><path d="M6 19h36M13 30h8M34 27v6M31 30h6"></path></symbol>
+</svg>
+
+<section class="trip-product-hero">
+  <div class="site-shell">
+    <nav class="trip-breadcrumb" aria-label="Breadcrumb"><a href="<?= url('index.php') ?>">Home</a><span>/</span><a href="<?= url('index.php#treks') ?>">Nepal treks</a><span>/</span><span><?= e($trek['title']) ?></span></nav>
+    <div class="trip-product-grid">
+      <div class="trip-product-copy">
+        <p class="eyebrow text-pine"><?= e($trek['region']) ?></p>
+        <h1><?= e($trek['title']) ?></h1>
+        <p class="trip-product-summary"><?= e($trek['summary']) ?></p>
+        <div class="trip-product-trust" aria-label="Service benefits"><span>Local Nepal team</span><span>Private planning</span><span>Safety-first pacing</span></div>
+        <div class="trip-product-actions">
+          <a class="btn-primary" href="<?= url('budget-plan.php?trek='.urlencode($trek['title'])) ?>">Get My Budget Plan <span aria-hidden="true">&nearr;</span></a>
+          <a class="trip-product-whatsapp" href="<?= e(whatsapp_url("Hello Tin-Tin Trekking, I'm interested in the {$trek['title']}.")) ?>" target="_blank" rel="noopener">Talk on WhatsApp</a>
+        </div>
+      </div>
+      <div class="trip-product-gallery" aria-label="Trip gallery">
+        <figure class="trip-product-gallery-main"><img src="<?= url($trek['image']) ?>" alt="<?= e($trek['title']) ?> mountain landscape"></figure>
+        <figure><img loading="lazy" src="<?= url('assets/images/annapurna.png') ?>" alt="Himalayan forest and mountain trail"></figure>
+        <figure><img loading="lazy" src="<?= url('assets/images/manaslu.png') ?>" alt="Remote Nepal mountain valley"></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trip-facts-section" aria-label="Trip facts">
+  <div class="site-shell">
+    <dl class="trip-facts-card">
+      <?php foreach ($tripFacts as $fact): ?>
+        <div class="trip-fact"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#trip-icon-<?= e($fact[0]) ?>"></use></svg><div><dt><?= e($fact[1]) ?></dt><dd><?= e($fact[2]) ?></dd></div></div>
+      <?php endforeach; ?>
+    </dl>
+  </div>
+</section>
+
+<nav class="trip-section-nav" aria-label="Trip page sections">
+  <div class="site-shell"><a href="#highlights">Highlights</a><a href="#overview">Overview</a><a href="#itinerary">Itinerary</a><a href="#included">Includes</a><a href="#route">Route &amp; altitude</a><a href="#faqs">FAQs</a><a class="trip-section-nav-cta" href="<?= url('budget-plan.php?trek='.urlencode($trek['title'])) ?>">Plan this trip</a></div>
+</nav>
+
+<section class="trip-content-section">
+  <div class="site-shell trip-content-grid">
+    <article class="trip-content-main">
+      <section class="trip-content-block" id="highlights">
+        <p class="eyebrow text-pine">At a glance</p><h2><?= e($trek['title']) ?> highlights</h2>
+        <ul class="trip-highlight-list"><?php foreach ($trek['highlights'] as $highlight): ?><li><span aria-hidden="true">&#10003;</span><?= e($highlight) ?></li><?php endforeach; ?></ul>
+      </section>
+
+      <section class="trip-content-block" id="overview">
+        <p class="eyebrow text-pine">The journey</p><h2>Trip overview</h2><p class="trip-lead"><?= e($trek['overview']) ?></p>
+        <div class="trip-note"><strong>A route built around you.</strong><span>Dates, daily pacing, rooms and transport are finalized after we understand your group and priorities.</span></div>
+      </section>
+
+      <section class="trip-content-block" id="itinerary">
+        <div class="trip-section-heading"><div><p class="eyebrow text-pine">Day by day</p><h2>Trip itinerary</h2></div><span><?= e($trek['duration']) ?></span></div>
+        <p class="trip-section-intro">This sample itinerary is a practical planning foundation. Your confirmed route may adapt to dates, conditions and preferences.</p>
+        <div class="trip-itinerary" data-accordion>
+          <?php foreach ($trek['itinerary'] as $i => $day): ?>
+            <div class="accordion-item <?= $i === 0 ? 'open' : '' ?>"><button class="accordion-button" aria-expanded="<?= $i === 0 ? 'true' : 'false' ?>"><span class="trip-day-number">Day <?= str_pad((string)($i + 1), 2, '0', STR_PAD_LEFT) ?></span><span class="trip-day-title"><?= e($day[0]) ?></span><span class="accordion-icon">+</span></button><div class="accordion-content"><p><?= e($day[1]) ?></p></div></div>
+          <?php endforeach; ?>
+        </div>
+      </section>
+
+      <section class="trip-content-block" id="included">
+        <p class="eyebrow text-pine">Your proposal</p><h2>Included and not included</h2>
+        <div class="trip-inclusion-grid">
+          <div><h3>Included</h3><ul><?php foreach ($trek['included'] as $item): ?><li><span aria-hidden="true">&#10003;</span><?= e($item) ?></li><?php endforeach; ?></ul></div>
+          <div><h3>Not included</h3><ul><?php foreach ($trek['excluded'] as $item): ?><li><span aria-hidden="true">&minus;</span><?= e($item) ?></li><?php endforeach; ?></ul></div>
+        </div>
+      </section>
+
+      <section class="trip-content-block" id="route">
+        <p class="eyebrow text-pine">Route &amp; altitude</p><h2>Climb steadily. Adapt deliberately.</h2>
+        <div class="trip-altitude-card" aria-label="Illustrative altitude profile"><div class="trip-altitude-chart"><i></i><i></i><i></i><i></i><span class="trip-altitude-start"><?= e($trek['start']) ?></span><strong><?= e($trek['altitude']) ?></strong><span class="trip-altitude-end"><?= e($trek['end']) ?></span></div><p>Illustrative profile, not a navigation chart. Your final plan contains route-specific details.</p></div>
+        <div class="trip-route-notes"><p><strong>Difficulty</strong><?= e($trek['difficulty']) ?>, assessed from daily distance, elevation and conditions.</p><p><strong>Best season</strong><?= e($trek['season']) ?> is the usual planning window, though mountain conditions vary.</p></div>
+      </section>
+
+      <section class="trip-content-block" id="comfort">
+        <p class="eyebrow text-pine">Comfort options</p><h2>Choose where comfort matters</h2>
+        <div class="trip-comfort-grid"><?php $options = [['Standard','Essential teahouses, shared options and core transport.'],['Comfort','Better lodge selection, hotel upgrades and more privacy.'],['Luxury','Premium rooms, enhanced service and private transport where possible.']]; ?><?php foreach ($options as $option): ?><div><h3><?= e($option[0]) ?></h3><p><?= e($option[1]) ?></p></div><?php endforeach; ?></div>
+      </section>
+
+      <section class="trip-content-block" id="faqs">
+        <p class="eyebrow text-pine">Trip questions</p><h2>Frequently asked questions</h2>
+        <div class="trip-faq-list" data-accordion><?php foreach ($trek['faqs'] as $i => $faq): ?><div class="accordion-item <?= $i === 0 ? 'open' : '' ?>"><button class="accordion-button" aria-expanded="<?= $i === 0 ? 'true' : 'false' ?>"><span><?= e($faq[0]) ?></span><span class="accordion-icon">+</span></button><div class="accordion-content"><p><?= e($faq[1]) ?></p></div></div><?php endforeach; ?></div>
+      </section>
+    </article>
+
+    <aside class="trip-booking-sidebar" aria-label="Plan this trip">
+      <div class="trip-booking-card">
+        <p class="trip-booking-kicker">Personalized trip</p><h2>Plan this trek around your budget</h2><p>Share your dates, group size and preferred comfort. We&rsquo;ll return with a practical route and clear proposal.</p>
+        <ul><li>Private, custom itinerary</li><li>Local planning expertise</li><li>No obligation to book</li></ul>
+        <a class="btn-primary" href="<?= url('budget-plan.php?trek='.urlencode($trek['title'])) ?>">Get My Budget Plan <span aria-hidden="true">&nearr;</span></a>
+        <a class="trip-booking-whatsapp" href="<?= e(whatsapp_url("Hello Tin-Tin Trekking, I'm interested in the {$trek['title']}.")) ?>" target="_blank" rel="noopener">Talk on WhatsApp</a>
+      </div>
+    </aside>
+  </div>
+</section>
 <?php require __DIR__ . '/footer.php'; ?>

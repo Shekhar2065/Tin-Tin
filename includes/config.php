@@ -28,6 +28,14 @@ function url(string $path = ''): string
     return base_path() . '/' . ltrim($path, '/');
 }
 
+function asset_url(string $path): string
+{
+    $cleanPath = ltrim($path, '/');
+    $filePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $cleanPath);
+    $version = is_file($filePath) ? (string) filemtime($filePath) : '1';
+    return url($cleanPath) . '?v=' . rawurlencode($version);
+}
+
 function e(?string $value): string
 {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
