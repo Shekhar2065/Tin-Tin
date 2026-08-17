@@ -1400,3 +1400,178 @@ button,
     padding-right: 1rem;
   }
 }
+
+/* Coordinated multicolor icon system */
+.hero-trip-search button {
+  color: #2563eb;
+  background: #eef5ff;
+}
+
+.hero-trip-search button:hover {
+  color: #fff;
+  background: #2563eb;
+}
+
+.hero-stat:nth-child(1) .hero-stat-icon {
+  color: #ffd166;
+  filter: drop-shadow(0 3px 8px rgba(255, 209, 102, .35));
+}
+
+.hero-stat:nth-child(2) .hero-stat-icon {
+  color: #72e0b5;
+  filter: drop-shadow(0 3px 8px rgba(114, 224, 181, .3));
+}
+
+.hero-stat:nth-child(3) .hero-stat-icon {
+  color: #7cc7ff;
+  filter: drop-shadow(0 3px 8px rgba(124, 199, 255, .35));
+}
+
+.featured-activities .offer-tab:nth-child(1) { --activity-icon: #f59e0b; --activity-icon-bg: #fff4cf; }
+.featured-activities .offer-tab:nth-child(2) { --activity-icon: #7c5ce7; --activity-icon-bg: #f0ebff; }
+.featured-activities .offer-tab:nth-child(3) { --activity-icon: #0ea5a8; --activity-icon-bg: #ddf8f5; }
+.featured-activities .offer-tab:nth-child(4) { --activity-icon: #ef5b61; --activity-icon-bg: #ffe8e9; }
+.featured-activities .offer-tab:nth-child(5) { --activity-icon: #2563eb; --activity-icon-bg: #e7f0ff; }
+
+.featured-activities .offer-tab svg {
+  width: 42px;
+  height: 42px;
+  padding: 6px;
+  color: var(--activity-icon);
+  background: var(--activity-icon-bg);
+  border-radius: 12px;
+  stroke: currentColor;
+  filter: drop-shadow(0 5px 9px rgba(18, 59, 93, .1));
+}
+
+.featured-activities .offer-tab[data-offer-filter="trekking"] svg {
+  color: var(--activity-icon);
+  background: var(--activity-icon-bg);
+  fill: var(--activity-icon);
+  stroke: var(--activity-icon);
+}
+
+.featured-activities .offer-tab:hover svg,
+.featured-activities .offer-tab.active svg {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--activity-icon-bg);
+}
+
+.offer-card:nth-child(4n + 1) .activity-card-duration svg { color: #2563eb; background: #e7f0ff; }
+.offer-card:nth-child(4n + 2) .activity-card-duration svg { color: #7c5ce7; background: #f0ebff; }
+.offer-card:nth-child(4n + 3) .activity-card-duration svg { color: #0d9d78; background: #dff8ee; }
+.offer-card:nth-child(4n + 4) .activity-card-duration svg { color: #e05263; background: #ffe8eb; }
+
+.activity-card-duration svg {
+  width: 28px;
+  height: 28px;
+  padding: 5px;
+  border-radius: 8px;
+  stroke: currentColor;
+}
+
+.service-band > div:nth-child(1) span { color: #2563eb; background: #e7f0ff; }
+.service-band > div:nth-child(2) span { color: #7c5ce7; background: #f0ebff; }
+.service-band > div:nth-child(3) span { color: #e05263; background: #ffe8eb; }
+.service-band > div:nth-child(4) span { color: #0d9d78; background: #dff8ee; }
+
+.service-band span {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 13px;
+  font-size: 1.4rem;
+  box-shadow: 0 6px 14px rgba(18, 59, 93, .09);
+}
+
+.service-band > div {
+  grid-template-columns: 44px 1fr;
+}
+
+.why-tintin-item:nth-child(1) .why-tintin-icon { color: #2563eb; background: linear-gradient(145deg, #f5f9ff, #e4efff); border-color: #c9ddff; }
+.why-tintin-item:nth-child(2) .why-tintin-icon { color: #7c5ce7; background: linear-gradient(145deg, #faf8ff, #ece7ff); border-color: #d8ceff; }
+.why-tintin-item:nth-child(3) .why-tintin-icon { color: #e05263; background: linear-gradient(145deg, #fff8f8, #ffe5e8); border-color: #ffcbd1; }
+.why-tintin-item:nth-child(4) .why-tintin-icon { color: #f59e0b; background: linear-gradient(145deg, #fffaf0, #fff0c7); border-color: #f9d98a; }
+.why-tintin-item:nth-child(5) .why-tintin-icon { color: #0ea5a8; background: linear-gradient(145deg, #f3fffd, #daf7f4); border-color: #b6ebe5; }
+.why-tintin-item:nth-child(6) .why-tintin-icon { color: #db3f91; background: linear-gradient(145deg, #fff7fc, #ffe3f2); border-color: #ffc6e4; }
+
+.why-tintin-icon {
+  box-shadow: 0 9px 22px rgba(18, 59, 93, .09);
+}
+
+.trust-pillar:nth-child(4n + 1) .trust-icon { color: #2563eb; background: #e7f0ff; border-color: #c9ddff; }
+.trust-pillar:nth-child(4n + 2) .trust-icon { color: #7c5ce7; background: #f0ebff; border-color: #d8ceff; }
+.trust-pillar:nth-child(4n + 3) .trust-icon { color: #e05263; background: #ffe8eb; border-color: #ffcbd1; }
+.trust-pillar:nth-child(4n + 4) .trust-icon { color: #0d9d78; background: #dff8ee; border-color: #b8ead7; }
+
+.trust-icon {
+  border: 1px solid;
+  border-radius: 12px;
+}
+
+.trip-fact:nth-child(6n + 1) svg { color: #2563eb; background: #e7f0ff; }
+.trip-fact:nth-child(6n + 2) svg { color: #7c5ce7; background: #f0ebff; }
+.trip-fact:nth-child(6n + 3) svg { color: #e05263; background: #ffe8eb; }
+.trip-fact:nth-child(6n + 4) svg { color: #f59e0b; background: #fff4cf; }
+.trip-fact:nth-child(6n + 5) svg { color: #0d9d78; background: #dff8ee; }
+.trip-fact:nth-child(6n + 6) svg { color: #0ea5a8; background: #ddf8f5; }
+
+.trip-fact svg {
+  width: 44px;
+  height: 44px;
+  padding: 6px;
+  border-radius: 12px;
+  stroke: currentColor;
+}
+
+.trip-fact {
+  grid-template-columns: 44px minmax(0, 1fr);
+}
+
+.trip-highlight-list li:nth-child(4n + 1) span { color: #2563eb; background: #e7f0ff; }
+.trip-highlight-list li:nth-child(4n + 2) span { color: #7c5ce7; background: #f0ebff; }
+.trip-highlight-list li:nth-child(4n + 3) span { color: #e05263; background: #ffe8eb; }
+.trip-highlight-list li:nth-child(4n + 4) span { color: #0d9d78; background: #dff8ee; }
+
+.trip-highlight-list li span {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.trip-highlight-list li {
+  grid-template-columns: 26px 1fr;
+}
+
+.home-faq-list .accordion-item:nth-child(4n + 1) .accordion-icon { color: #2563eb; background: #e7f0ff; border-color: #c9ddff; }
+.home-faq-list .accordion-item:nth-child(4n + 2) .accordion-icon { color: #7c5ce7; background: #f0ebff; border-color: #d8ceff; }
+.home-faq-list .accordion-item:nth-child(4n + 3) .accordion-icon { color: #e05263; background: #ffe8eb; border-color: #ffcbd1; }
+.home-faq-list .accordion-item:nth-child(4n + 4) .accordion-icon { color: #0d9d78; background: #dff8ee; border-color: #b8ead7; }
+
+.trip-faq-list .accordion-item:nth-child(4n + 1) .accordion-icon,
+.trip-content-main .accordion-item:nth-child(4n + 1) .accordion-icon { color: #2563eb; background: #e7f0ff; }
+.trip-faq-list .accordion-item:nth-child(4n + 2) .accordion-icon,
+.trip-content-main .accordion-item:nth-child(4n + 2) .accordion-icon { color: #7c5ce7; background: #f0ebff; }
+.trip-faq-list .accordion-item:nth-child(4n + 3) .accordion-icon,
+.trip-content-main .accordion-item:nth-child(4n + 3) .accordion-icon { color: #e05263; background: #ffe8eb; }
+.trip-faq-list .accordion-item:nth-child(4n + 4) .accordion-icon,
+.trip-content-main .accordion-item:nth-child(4n + 4) .accordion-icon { color: #0d9d78; background: #dff8ee; }
+
+/* Keep colored accordion controls compact instead of stretching with the grid. */
+.trip-faq-list .accordion-button {
+  grid-template-columns: minmax(0, 1fr) 32px;
+}
+
+.trip-itinerary .accordion-icon,
+.trip-faq-list .accordion-icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  line-height: 1;
+}
