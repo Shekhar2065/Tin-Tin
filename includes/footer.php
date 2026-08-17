@@ -90,4 +90,10 @@
 </a>
 <a href="<?= url('budget-plan.php') ?>" class="mobile-sticky-cta">Get My Budget Plan</a>
 <script src="<?= asset_url('assets/js/site.js') ?>" defer></script>
+<script
+  src="<?= asset_url('chatbot/chat-widget.js') ?>"
+  data-chat-endpoint="https://tin-tin-website-chat.thapasther101.workers.dev/chat"
+  data-greeting="Namaste! How can I help you plan your Himalayan trip?"
+  defer
+></script>
 </body></html>

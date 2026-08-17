@@ -23,6 +23,7 @@ $pageDescription = $pageDescription ?? 'Personalized Himalayan adventures design
   <link rel="stylesheet" href="<?= asset_url('assets/css/minimal-theme.css') ?>">
   <link rel="stylesheet" href="<?= asset_url('assets/css/footer.css') ?>">
   <link rel="stylesheet" href="<?= asset_url('assets/css/polish.css') ?>">
+  <link rel="stylesheet" href="<?= asset_url('chatbot/chat-widget.css') ?>">
 </head>
 <body class="bg-white text-slate-700 antialiased">
 <a href="#main" class="skip-link">Skip to content</a>

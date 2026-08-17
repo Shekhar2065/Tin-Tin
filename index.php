@@ -258,44 +258,89 @@ require __DIR__ . '/includes/header.php';
 
 <section id="reviews" class="platform-reviews py-20 md:py-28">
   <div class="site-shell">
-    <div class="grid gap-7 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
-      <div><p class="eyebrow text-pine">Independent reviews</p><h2 class="mt-3 font-display text-5xl text-ink md:text-7xl">Read reviews on<br>trusted platforms.</h2></div>
-      <p class="max-w-2xl text-lg leading-8 lg:justify-self-end">See recent traveler feedback on Google and Tripadvisor. Ratings and review counts are shown only on the platforms themselves so they always remain current.</p>
+    <div class="review-showcase">
+      <p class="eyebrow text-center text-pine">Traveler stories</p>
+      <h2 class="review-showcase-title">Reviews from our trekking community</h2>
+
+      <section class="review-platform review-platform-tripadvisor" data-review-carousel aria-labelledby="tripadvisor-review-title">
+        <header class="review-platform-header">
+          <div class="review-platform-brand">
+            <svg class="review-platform-logo tripadvisor-mark" viewBox="0 0 64 40" aria-hidden="true"><path d="M18 10h28M22 10l3-5h14l3 5"/><circle cx="17" cy="23" r="11"/><circle cx="47" cy="23" r="11"/><circle cx="17" cy="23" r="4"/><circle cx="47" cy="23" r="4"/><path d="M28 25h8M8 12 3 8m53 4 5-4"/></svg>
+            <h3 id="tripadvisor-review-title">Tripadvisor</h3>
+          </div>
+          <div class="review-rating-summary"><span class="tripadvisor-rating" role="img" aria-label="Five out of five rating"><i></i><i></i><i></i><i></i><i></i></span><strong>5.0</strong><span>from 4 sample reviews</span></div>
+        </header>
+
+        <div class="review-card-track" data-review-track tabindex="0" aria-label="Sample Tripadvisor testimonials">
+          <article class="review-snippet">
+            <div class="reviewer"><span class="review-avatar avatar-sun">AR</span><div><p>Aarav R.</p><span class="review-card-stars tripadvisor-stars" aria-label="Five stars">★★★★★</span></div></div>
+            <h4>Amazing trek to Everest Base Camp</h4>
+            <p>Our guide kept every day organized and relaxed. The views were unforgettable, and the village stops made the whole journey feel personal.</p>
+            <span class="review-sample-tag">Sample testimonial</span>
+          </article>
+          <article class="review-snippet">
+            <div class="reviewer"><span class="review-avatar avatar-forest">HM</span><div><p>Holly M.</p><span class="review-card-stars tripadvisor-stars" aria-label="Five stars">★★★★★</span></div></div>
+            <h4>Highly recommended!</h4>
+            <p>The itinerary had the perfect balance of challenge and rest. Every question was answered quickly, and we always felt well supported.</p>
+            <span class="review-sample-tag">Sample testimonial</span>
+          </article>
+          <article class="review-snippet">
+            <div class="reviewer"><span class="review-avatar avatar-dusk">FR</span><div><p>Faith R.</p><span class="review-card-stars tripadvisor-stars" aria-label="Five stars">★★★★★</span></div></div>
+            <h4>A wonderful Himalayan experience</h4>
+            <p>The team was warm, patient and knowledgeable. Their attention to detail helped us enjoy Nepal with complete confidence.</p>
+            <span class="review-sample-tag">Sample testimonial</span>
+          </article>
+          <article class="review-snippet">
+            <div class="reviewer"><span class="review-avatar avatar-lake">DK</span><div><p>Daniel K.</p><span class="review-card-stars tripadvisor-stars" aria-label="Five stars">★★★★★</span></div></div>
+            <h4>Thoughtful from start to finish</h4>
+            <p>From the airport welcome to our final trail day, everything felt carefully planned while still leaving room for spontaneous moments.</p>
+            <span class="review-sample-tag">Sample testimonial</span>
+          </article>
+        </div>
+        <div class="review-carousel-controls" aria-label="Tripadvisor testimonial controls"><button type="button" data-review-prev aria-label="Previous Tripadvisor testimonial">&#8249;</button><button type="button" data-review-next aria-label="Next Tripadvisor testimonial">&#8250;</button></div>
+      </section>
+
+      <section class="review-platform review-platform-google" data-review-carousel aria-labelledby="google-review-title">
+        <header class="review-platform-header">
+          <div class="review-platform-brand">
+            <div class="google-mark" aria-hidden="true"><span>G</span></div>
+            <h3 id="google-review-title">Google Reviews</h3>
+          </div>
+          <div class="review-rating-summary"><strong>5.0</strong><span class="review-card-stars google-stars" role="img" aria-label="Five out of five stars">★★★★★</span><span>from 4 sample reviews</span></div>
+        </header>
+
+        <div class="review-card-track" data-review-track tabindex="0" aria-label="Sample Google testimonials">
+          <article class="review-snippet">
+            <div class="reviewer"><span class="review-avatar avatar-lake">AY</span><div><p>Aisha Y.</p><span class="review-card-stars google-stars" aria-label="Five stars">★★★★★</span></div></div>
+            <h4>An experience we will never forget</h4>
+            <p>Our trek was seamless, and a huge part of that was the supportive team. They were friendly, attentive and encouraging throughout.</p>
+            <span class="review-sample-tag">Sample testimonial</span>
+          </article>
+          <article class="review-snippet">
+            <div class="reviewer"><span class="review-avatar avatar-forest">SP</span><div><p>Sai P.</p><span class="review-card-stars google-stars" aria-label="Five stars">★★★★★</span></div></div>
+            <h4>Excellent experience</h4>
+            <p>Everything was smooth and taken care of. Our guides were knowledgeable, kind and always ready to help us along the trail.</p>
+            <span class="review-sample-tag">Sample testimonial</span>
+          </article>
+          <article class="review-snippet">
+            <div class="reviewer"><span class="review-avatar avatar-berry">KP</span><div><p>Kevin P.</p><span class="review-card-stars google-stars" aria-label="Five stars">★★★★★</span></div></div>
+            <h4>A magical Everest journey</h4>
+            <p>The landscape was incredible, but the people made it truly special. We felt welcomed and supported from beginning to end.</p>
+            <span class="review-sample-tag">Sample testimonial</span>
+          </article>
+          <article class="review-snippet">
+            <div class="reviewer"><span class="review-avatar avatar-sun">ML</span><div><p>Mei L.</p><span class="review-card-stars google-stars" aria-label="Five stars">★★★★★</span></div></div>
+            <h4>Professional and genuinely caring</h4>
+            <p>The route, accommodation and pacing were all thoughtfully arranged. We could simply relax and take in the mountains.</p>
+            <span class="review-sample-tag">Sample testimonial</span>
+          </article>
+        </div>
+        <div class="review-carousel-controls" aria-label="Google testimonial controls"><button type="button" data-review-prev aria-label="Previous Google testimonial">&#8249;</button><button type="button" data-review-next aria-label="Next Google testimonial">&#8250;</button></div>
+      </section>
+
+      <div class="review-platform-links"><a href="<?= e(SITE['tripadvisor_reviews_url']) ?>" target="_blank" rel="noopener">Read Tripadvisor Reviews</a><a href="<?= e(SITE['google_reviews_url']) ?>" target="_blank" rel="noopener">Read Google Reviews</a></div>
+      <p class="review-demo-disclosure">These testimonials, names and ratings are fictional placeholders for this website demo, not verified Google or Tripadvisor reviews.</p>
     </div>
-
-    <div class="platform-review-grid mt-12 grid gap-5 lg:grid-cols-2">
-      <article class="platform-review-card platform-review-google">
-        <div class="platform-review-head">
-          <div class="google-mark" aria-hidden="true"><span>G</span></div>
-          <div><p class="platform-review-label">Reviews on</p><h3>Google</h3></div>
-        </div>
-        <div class="platform-review-body">
-          <div class="platform-review-stars" aria-hidden="true">☆☆☆☆☆</div>
-          <p>Open Google to view Tin-Tin Trekking&rsquo;s current rating, verified review count and traveler comments.</p>
-        </div>
-        <div class="platform-review-footer">
-          <span><i></i>Live platform results</span>
-          <a href="<?= e(SITE['google_reviews_url']) ?>" target="_blank" rel="noopener">View Google Reviews <b aria-hidden="true">&nearr;</b></a>
-        </div>
-      </article>
-
-      <article class="platform-review-card platform-review-tripadvisor">
-        <div class="platform-review-head">
-          <svg class="tripadvisor-mark" viewBox="0 0 64 40" aria-hidden="true"><path d="M18 10h28M22 10l3-5h14l3 5"/><circle cx="17" cy="23" r="11"/><circle cx="47" cy="23" r="11"/><circle cx="17" cy="23" r="4"/><circle cx="47" cy="23" r="4"/><path d="M28 25h8M8 12 3 8m53 4 5-4"/></svg>
-          <div><p class="platform-review-label">Reviews on</p><h3>Tripadvisor</h3></div>
-        </div>
-        <div class="platform-review-body">
-          <div class="tripadvisor-rating" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-          <p>Open Tripadvisor to find the matching company profile and read its latest independent traveler feedback.</p>
-        </div>
-        <div class="platform-review-footer">
-          <span><i></i>Profile search link</span>
-          <a href="<?= e(SITE['tripadvisor_reviews_url']) ?>" target="_blank" rel="noopener">View Tripadvisor Reviews <b aria-hidden="true">&nearr;</b></a>
-        </div>
-      </article>
-    </div>
-
-    <p class="mt-5 text-xs leading-5 text-slate-500">Exact profile URLs, ratings and review counts can be connected when verified listing links are supplied.</p>
   </div>
 </section>
 

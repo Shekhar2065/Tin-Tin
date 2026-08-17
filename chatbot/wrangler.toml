@@ -1,0 +1,23 @@
+# Replace the Worker name if desired.
+name = "tin-tin-website-chat"
+main = "worker.js"
+compatibility_date = "2026-08-16"
+workers_dev = true
+
+[vars]
+# REQUIRED: Replace with the exact production origin. Do not add a trailing slash.
+# Example: "https://www.tintintrekking.com"
+ALLOWED_ORIGIN = "http://localhost"
+
+[ai]
+binding = "AI"
+
+# Cloudflare's native Workers Rate Limiting binding.
+# namespace_id must be a positive integer string unique within your account.
+[[ratelimits]]
+name = "CHAT_RATE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 20
+  period = 60

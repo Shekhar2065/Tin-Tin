@@ -1,0 +1,390 @@
+/* Override these variables after loading this file to restyle the widget. */
+:root {
+  --tt-chat-primary: #217d5b;
+  --tt-chat-primary-hover: #196a4c;
+  --tt-chat-surface: #ffffff;
+  --tt-chat-soft: #f2f7f4;
+  --tt-chat-border: #dbe5df;
+  --tt-chat-text: #123856;
+  --tt-chat-muted: #617589;
+  --tt-chat-danger: #a33a3a;
+  --tt-chat-font: Inter, Geist, "Space Grotesk", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --tt-chat-radius: 18px;
+  --tt-chat-shadow: 0 22px 65px rgba(18, 56, 86, 0.2);
+  --tt-chat-z-index: 10000;
+}
+
+#tt-chat-widget,
+#tt-chat-widget * {
+  box-sizing: border-box;
+}
+
+#tt-chat-widget {
+  font-family: var(--tt-chat-font);
+  color: var(--tt-chat-text);
+}
+
+.tt-chat-invite {
+  position: fixed;
+  right: calc(max(20px, env(safe-area-inset-right)) + 76px);
+  bottom: max(24px, env(safe-area-inset-bottom));
+  z-index: var(--tt-chat-z-index);
+  display: flex;
+  width: min(310px, calc(100vw - 120px));
+  min-height: 78px;
+  align-items: flex-start;
+  overflow: visible;
+  background: var(--tt-chat-surface);
+  border: 1px solid var(--tt-chat-border);
+  border-radius: 16px;
+  box-shadow: 0 15px 42px rgba(18, 56, 86, 0.18);
+  animation: tt-chat-invite-in 0.35s ease-out both;
+}
+
+.tt-chat-invite::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  bottom: 20px;
+  width: 15px;
+  height: 15px;
+  background: var(--tt-chat-surface);
+  border-top: 1px solid var(--tt-chat-border);
+  border-right: 1px solid var(--tt-chat-border);
+  transform: rotate(45deg);
+}
+
+.tt-chat-invite[hidden] {
+  display: none;
+}
+
+.tt-chat-invite-open {
+  flex: 1;
+  padding: 16px 16px 15px;
+  color: var(--tt-chat-text);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.tt-chat-invite-title {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--tt-chat-primary);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.tt-chat-invite-close {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  margin: 7px 7px 0 0;
+  padding: 0;
+  place-items: center;
+  color: var(--tt-chat-muted);
+  font: inherit;
+  font-size: 19px;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.tt-chat-invite-open:hover {
+  color: var(--tt-chat-primary);
+}
+
+.tt-chat-invite-close:hover {
+  color: var(--tt-chat-text);
+  background: var(--tt-chat-soft);
+}
+
+.tt-chat-invite-open:focus-visible,
+.tt-chat-invite-close:focus-visible {
+  outline: 3px solid rgba(33, 125, 91, 0.28);
+  outline-offset: 2px;
+}
+
+@keyframes tt-chat-invite-in {
+  from { opacity: 0; transform: translateX(12px) scale(0.97); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.tt-chat-launcher {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: var(--tt-chat-z-index);
+  display: grid;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  place-items: center;
+  color: #fff;
+  background: var(--tt-chat-primary);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 12px 32px rgba(33, 125, 91, 0.3);
+  cursor: pointer;
+}
+
+.tt-chat-launcher:hover,
+.tt-chat-launcher:focus-visible,
+.tt-chat-send:hover,
+.tt-chat-send:focus-visible {
+  background: var(--tt-chat-primary-hover);
+}
+
+.tt-chat-launcher:focus-visible,
+.tt-chat-close:focus-visible,
+.tt-chat-input:focus-visible,
+.tt-chat-send:focus-visible {
+  outline: 3px solid rgba(33, 125, 91, 0.28);
+  outline-offset: 3px;
+}
+
+.tt-chat-launcher svg {
+  width: 27px;
+  height: 27px;
+}
+
+.tt-chat-panel {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: calc(max(20px, env(safe-area-inset-bottom)) + 76px);
+  z-index: var(--tt-chat-z-index);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(390px, calc(100vw - 40px));
+  height: min(610px, calc(100dvh - 120px));
+  overflow: hidden;
+  background: var(--tt-chat-surface);
+  border: 1px solid var(--tt-chat-border);
+  border-radius: var(--tt-chat-radius);
+  box-shadow: var(--tt-chat-shadow);
+}
+
+.tt-chat-panel[hidden] {
+  display: none;
+}
+
+.tt-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 76px;
+  padding: 16px 18px;
+  color: #fff;
+  background: var(--tt-chat-primary);
+}
+
+.tt-chat-avatar {
+  display: grid;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  color: var(--tt-chat-primary);
+  font-size: 15px;
+  font-weight: 800;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.tt-chat-heading {
+  min-width: 0;
+  flex: 1;
+}
+
+.tt-chat-title,
+.tt-chat-status {
+  margin: 0;
+}
+
+.tt-chat-title {
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.tt-chat-status {
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 12px;
+}
+
+.tt-chat-close {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  place-items: center;
+  color: #fff;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.tt-chat-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.tt-chat-close svg,
+.tt-chat-send svg {
+  width: 20px;
+  height: 20px;
+}
+
+.tt-chat-messages {
+  overflow-y: auto;
+  padding: 20px 16px;
+  background: var(--tt-chat-soft);
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #b6c8be transparent;
+}
+
+.tt-chat-message {
+  display: flex;
+  margin: 0 0 12px;
+}
+
+.tt-chat-message--user {
+  justify-content: flex-end;
+}
+
+.tt-chat-bubble {
+  max-width: 84%;
+  margin: 0;
+  padding: 11px 13px;
+  color: var(--tt-chat-text);
+  font-size: 14px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--tt-chat-surface);
+  border: 1px solid var(--tt-chat-border);
+  border-radius: 6px 16px 16px;
+}
+
+.tt-chat-message--user .tt-chat-bubble {
+  color: #fff;
+  background: var(--tt-chat-primary);
+  border-color: var(--tt-chat-primary);
+  border-radius: 16px 6px 16px 16px;
+}
+
+.tt-chat-message--error .tt-chat-bubble {
+  color: var(--tt-chat-danger);
+  background: #fff8f8;
+  border-color: #edd1d1;
+}
+
+.tt-chat-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 58px;
+  min-height: 42px;
+}
+
+.tt-chat-typing span {
+  width: 7px;
+  height: 7px;
+  background: var(--tt-chat-muted);
+  border-radius: 50%;
+  animation: tt-chat-pulse 1.2s infinite ease-in-out;
+}
+
+.tt-chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+.tt-chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes tt-chat-pulse {
+  0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+.tt-chat-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 10px;
+  padding: 13px;
+  background: var(--tt-chat-surface);
+  border-top: 1px solid var(--tt-chat-border);
+}
+
+.tt-chat-input {
+  width: 100%;
+  min-height: 46px;
+  max-height: 116px;
+  padding: 12px 13px;
+  resize: none;
+  color: var(--tt-chat-text);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.45;
+  background: #fff;
+  border: 1px solid var(--tt-chat-border);
+  border-radius: 12px;
+}
+
+.tt-chat-input::placeholder { color: #81909f; }
+.tt-chat-input:disabled { cursor: wait; opacity: 0.7; }
+
+.tt-chat-send {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  place-items: center;
+  color: #fff;
+  background: var(--tt-chat-primary);
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.tt-chat-send:disabled { cursor: not-allowed; opacity: 0.55; }
+
+@media (max-width: 520px) {
+  .tt-chat-invite {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: calc(max(12px, env(safe-area-inset-bottom)) + 74px);
+    width: min(330px, calc(100vw - 24px));
+  }
+
+  .tt-chat-invite::after {
+    right: 22px;
+    bottom: -8px;
+    transform: rotate(135deg);
+  }
+
+  .tt-chat-launcher {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .tt-chat-panel {
+    right: max(10px, env(safe-area-inset-right));
+    bottom: calc(max(12px, env(safe-area-inset-bottom)) + 72px);
+    width: calc(100vw - max(20px, env(safe-area-inset-right)));
+    height: min(640px, calc(100dvh - 100px));
+    border-radius: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-chat-invite { animation: none; }
+  .tt-chat-typing span { animation: none; opacity: 0.65; }
+}
