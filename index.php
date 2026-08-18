@@ -201,7 +201,7 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section class="planning-section relative overflow-hidden py-20 text-white md:py-28 bg-[#0a1a3d]">
+<section class="planning-section relative overflow-hidden py-20 text-white md:py-28 bg-[#111714]">
 
   <!-- Background image -->
   <div class="planning-background absolute inset-0 z-0">
@@ -224,7 +224,7 @@ require __DIR__ . '/includes/header.php';
 
     <div class="mt-12 grid border-y border-white/15 md:grid-cols-2 xl:grid-cols-4">
       <?php $steps=[['01','Tell Us Your Budget','Choose a useful budget range—only inside our private inquiry.'],['02','Tell Us What You Want','Share dates, group size, experience and what matters to you.'],['03','We Design Your Trip','We balance route, lodging, transport and service around your priorities.'],['04','Receive Your Plan','You receive a personalized proposal with clear inclusions.']]; foreach($steps as $s): ?>
-      <div class="planning-step-card border-b border-white/15 p-7 md:border-r xl:border-b-0 bg-[#0a1a3d]/40 backdrop-blur-sm">
+      <div class="planning-step-card border-b border-white/15 p-7 md:border-r xl:border-b-0 bg-black/35 backdrop-blur-sm">
         <span class="font-display text-4xl text-emerald-300"><?= $s[0] ?></span>
         <h3 class="mt-8 text-lg font-bold text-white"><?= e($s[1]) ?></h3>
         <p class="mt-3 text-sm leading-6 text-slate-300"><?= e($s[2]) ?></p>
@@ -241,106 +241,123 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section id="gallery" class="gallery-section py-20 md:py-28">
+<section id="gallery" class="destination-gallery-section py-16 md:py-24" aria-labelledby="destination-gallery-title">
   <div class="site-shell">
-    <div class="grid gap-7 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
-      <div><p class="eyebrow text-pine">Through the lens</p><h2 class="mt-3 font-display text-5xl text-ink md:text-7xl">Himalaya,<br>in moments.</h2></div>
-      <div class="max-w-xl lg:justify-self-end"><p class="text-lg leading-8">From first light on the high peaks to quiet village trails, these landscapes shape every journey we plan.</p><p class="mt-3 text-xs font-bold uppercase tracking-[.16em] text-slate-500">Select an image to explore</p></div>
-    </div>
-    <div class="gallery-grid mt-12">
-      <button class="gallery-tile gallery-tile-feature" data-gallery-item data-src="<?= url('assets/images/footer-nepal-cultural.png') ?>" data-caption="Himalayan culture — chorten, village trail and mountain light"><img loading="lazy" src="<?= url('assets/images/footer-nepal-cultural.png') ?>" alt="Nepal mountain culture with a chorten, prayer flags and stone village"><span><b>Nepal culture</b><small>Village trail · Himalaya</small></span></button>
-      <button class="gallery-tile" data-gallery-item data-src="<?= url('assets/images/everest-hero.png') ?>" data-caption="Everest region — the trail at first light"><img loading="lazy" src="<?= url('assets/images/everest-hero.png') ?>" alt="Trekkers beneath Himalayan peaks at dawn"><span><b>Everest region</b><small>High mountain morning</small></span></button>
-      <button class="gallery-tile" data-gallery-item data-src="<?= url('assets/images/annapurna.png') ?>" data-caption="Annapurna region — rhododendron forest and stone paths"><img loading="lazy" src="<?= url('assets/images/annapurna.png') ?>" alt="Annapurna mountain above a rhododendron valley"><span><b>Annapurna</b><small>Forest to sanctuary</small></span></button>
-      <button class="gallery-tile gallery-tile-wide" data-gallery-item data-src="<?= url('assets/images/manaslu.png') ?>" data-caption="Manaslu region — river valley, prayer flags and remote trails"><img loading="lazy" src="<?= url('assets/images/manaslu.png') ?>" alt="Remote Manaslu valley with prayer flags and stone trail"><span><b>Manaslu</b><small>Remote mountain country</small></span></button>
+    <div class="destination-gallery-shell">
+      <header class="destination-gallery-heading">
+        <p><span aria-hidden="true"></span>Unique experiences in Nepal &amp; beyond</p>
+        <h2 id="destination-gallery-title">Top Travel Destinations</h2>
+      </header>
+
+      <div class="destination-card-tabs" role="tablist" aria-label="Travel destinations">
+        <button class="destination-card-tab active" type="button" role="tab" aria-selected="true" aria-controls="destination-panel-nepal" data-destination-tab="nepal">
+          <img loading="lazy" src="<?= url('assets/images/footer-nepal-cultural.png') ?>" alt="Temple architecture and Himalayan mountains in Nepal">
+          <span><strong>Nepal</strong><small>4 regions</small></span>
+        </button>
+        <button class="destination-card-tab" type="button" role="tab" aria-selected="false" aria-controls="destination-panel-bhutan" data-destination-tab="bhutan" tabindex="-1">
+          <img loading="lazy" src="<?= asset_url('assets/images/bhutan-tigers-nest.png') ?>" alt="Tiger's Nest monastery on a forested cliff in Bhutan">
+          <span><strong>Bhutan</strong><small>1 highlight</small></span>
+        </button>
+        <button class="destination-card-tab" type="button" role="tab" aria-selected="false" aria-controls="destination-panel-tibet" data-destination-tab="tibet" tabindex="-1">
+          <img loading="lazy" src="<?= asset_url('assets/images/tibet-plateau.png') ?>" alt="Road, chorten and snowy mountains on the Tibetan plateau">
+          <span><strong>Tibet</strong><small>1 highlight</small></span>
+        </button>
+      </div>
+
+      <div id="destination-panel-nepal" class="destination-detail-panel" role="tabpanel" data-destination-panel="nepal">
+        <div class="destination-detail-heading"><div><span>Explore Nepal</span><h3>Choose a region</h3></div><p>Select a picture to view it full screen.</p></div>
+        <div class="destination-region-grid">
+          <button class="destination-region-card" data-gallery-item data-src="<?= url('assets/images/everest-hero.png') ?>" data-caption="Everest region — the trail at first light"><img loading="lazy" src="<?= url('assets/images/everest-hero.png') ?>" alt="Trekkers beneath Himalayan peaks at dawn"><span><strong>Everest</strong><small>High mountain trails</small></span></button>
+          <button class="destination-region-card" data-gallery-item data-src="<?= url('assets/images/annapurna.png') ?>" data-caption="Annapurna region — rhododendron forest and stone paths"><img loading="lazy" src="<?= url('assets/images/annapurna.png') ?>" alt="Annapurna mountain above a rhododendron valley"><span><strong>Annapurna</strong><small>Forest to sanctuary</small></span></button>
+          <button class="destination-region-card" data-gallery-item data-src="<?= url('assets/images/manaslu.png') ?>" data-caption="Manaslu region — river valley, prayer flags and remote trails"><img loading="lazy" src="<?= url('assets/images/manaslu.png') ?>" alt="Remote Manaslu valley with prayer flags and a stone trail"><span><strong>Manaslu</strong><small>Remote mountain country</small></span></button>
+          <button class="destination-region-card" data-gallery-item data-src="<?= url('assets/images/footer-nepal-cultural.png') ?>" data-caption="Kathmandu and Nepal culture — temples, village trails and Himalayan light"><img loading="lazy" src="<?= url('assets/images/footer-nepal-cultural.png') ?>" alt="Nepal mountain culture with temple architecture and Himalayan peaks"><span><strong>Kathmandu</strong><small>Culture and heritage</small></span></button>
+        </div>
+      </div>
+
+      <div id="destination-panel-bhutan" class="destination-detail-panel hidden" role="tabpanel" data-destination-panel="bhutan">
+        <div class="destination-detail-heading"><div><span>Explore Bhutan</span><h3>Paro &amp; Tiger&rsquo;s Nest</h3></div><p>Select the picture to view it full screen.</p></div>
+        <div class="destination-region-grid destination-region-grid-single">
+          <button class="destination-region-card" data-gallery-item data-src="<?= asset_url('assets/images/bhutan-tigers-nest.png') ?>" data-caption="Bhutan — Paro Taktsang, the Tiger's Nest monastery"><img loading="lazy" src="<?= asset_url('assets/images/bhutan-tigers-nest.png') ?>" alt="Tiger's Nest monastery built into a forested cliff in Bhutan"><span><strong>Tiger&rsquo;s Nest</strong><small>Paro, Bhutan</small></span></button>
+        </div>
+      </div>
+
+      <div id="destination-panel-tibet" class="destination-detail-panel hidden" role="tabpanel" data-destination-panel="tibet">
+        <div class="destination-detail-heading"><div><span>Explore Tibet</span><h3>The high plateau</h3></div><p>Select the picture to view it full screen.</p></div>
+        <div class="destination-region-grid destination-region-grid-single">
+          <button class="destination-region-card" data-gallery-item data-src="<?= asset_url('assets/images/tibet-plateau.png') ?>" data-caption="Tibet — high plateau road, chorten and snow-covered Himalaya"><img loading="lazy" src="<?= asset_url('assets/images/tibet-plateau.png') ?>" alt="Road leading across the Tibetan plateau toward snowy Himalayan mountains"><span><strong>Tibetan Plateau</strong><small>Mountains and open country</small></span></button>
+        </div>
+      </div>
+
+      <div class="destination-gallery-action">
+        <a href="<?= url('gallery.php') ?>">View all photos <span aria-hidden="true">→</span></a>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="reviews" class="platform-reviews py-20 md:py-28">
+<section id="reviews" class="client-reviews py-20 md:py-28" aria-labelledby="client-reviews-title">
   <div class="site-shell">
-    <div class="review-showcase">
-      <p class="eyebrow text-center text-pine">Traveler stories</p>
-      <h2 class="review-showcase-title">Reviews from our trekking community</h2>
+    <header class="client-reviews-heading">
+      <p><span aria-hidden="true"></span>Traveler&rsquo;s Tales</p>
+      <h2 id="client-reviews-title">What Our Clients Say</h2>
+    </header>
 
-      <section class="review-platform review-platform-tripadvisor" data-review-carousel aria-labelledby="tripadvisor-review-title">
-        <header class="review-platform-header">
-          <div class="review-platform-brand">
-            <svg class="review-platform-logo tripadvisor-mark" viewBox="0 0 64 40" aria-hidden="true"><path d="M18 10h28M22 10l3-5h14l3 5"/><circle cx="17" cy="23" r="11"/><circle cx="47" cy="23" r="11"/><circle cx="17" cy="23" r="4"/><circle cx="47" cy="23" r="4"/><path d="M28 25h8M8 12 3 8m53 4 5-4"/></svg>
-            <h3 id="tripadvisor-review-title">Tripadvisor</h3>
-          </div>
-          <div class="review-rating-summary"><span class="tripadvisor-rating" role="img" aria-label="Five out of five rating"><i></i><i></i><i></i><i></i><i></i></span><strong>5.0</strong><span>from 4 sample reviews</span></div>
-        </header>
-
-        <div class="review-card-track" data-review-track tabindex="0" aria-label="Sample Tripadvisor testimonials">
-          <article class="review-snippet">
-            <div class="reviewer"><span class="review-avatar avatar-sun">AR</span><div><p>Aarav R.</p><span class="review-card-stars tripadvisor-stars" aria-label="Five stars">★★★★★</span></div></div>
-            <h4>Amazing trek to Everest Base Camp</h4>
-            <p>Our guide kept every day organized and relaxed. The views were unforgettable, and the village stops made the whole journey feel personal.</p>
-            <span class="review-sample-tag">Sample testimonial</span>
-          </article>
-          <article class="review-snippet">
-            <div class="reviewer"><span class="review-avatar avatar-forest">HM</span><div><p>Holly M.</p><span class="review-card-stars tripadvisor-stars" aria-label="Five stars">★★★★★</span></div></div>
-            <h4>Highly recommended!</h4>
-            <p>The itinerary had the perfect balance of challenge and rest. Every question was answered quickly, and we always felt well supported.</p>
-            <span class="review-sample-tag">Sample testimonial</span>
-          </article>
-          <article class="review-snippet">
-            <div class="reviewer"><span class="review-avatar avatar-dusk">FR</span><div><p>Faith R.</p><span class="review-card-stars tripadvisor-stars" aria-label="Five stars">★★★★★</span></div></div>
-            <h4>A wonderful Himalayan experience</h4>
-            <p>The team was warm, patient and knowledgeable. Their attention to detail helped us enjoy Nepal with complete confidence.</p>
-            <span class="review-sample-tag">Sample testimonial</span>
-          </article>
-          <article class="review-snippet">
-            <div class="reviewer"><span class="review-avatar avatar-lake">DK</span><div><p>Daniel K.</p><span class="review-card-stars tripadvisor-stars" aria-label="Five stars">★★★★★</span></div></div>
-            <h4>Thoughtful from start to finish</h4>
-            <p>From the airport welcome to our final trail day, everything felt carefully planned while still leaving room for spontaneous moments.</p>
-            <span class="review-sample-tag">Sample testimonial</span>
-          </article>
-        </div>
-        <div class="review-carousel-controls" aria-label="Tripadvisor testimonial controls"><button type="button" data-review-prev aria-label="Previous Tripadvisor testimonial">&#8249;</button><button type="button" data-review-next aria-label="Next Tripadvisor testimonial">&#8250;</button></div>
-      </section>
-
-      <section class="review-platform review-platform-google" data-review-carousel aria-labelledby="google-review-title">
-        <header class="review-platform-header">
-          <div class="review-platform-brand">
-            <div class="google-mark" aria-hidden="true"><span>G</span></div>
-            <h3 id="google-review-title">Google Reviews</h3>
-          </div>
-          <div class="review-rating-summary"><strong>5.0</strong><span class="review-card-stars google-stars" role="img" aria-label="Five out of five stars">★★★★★</span><span>from 4 sample reviews</span></div>
-        </header>
-
-        <div class="review-card-track" data-review-track tabindex="0" aria-label="Sample Google testimonials">
-          <article class="review-snippet">
-            <div class="reviewer"><span class="review-avatar avatar-lake">AY</span><div><p>Aisha Y.</p><span class="review-card-stars google-stars" aria-label="Five stars">★★★★★</span></div></div>
-            <h4>An experience we will never forget</h4>
-            <p>Our trek was seamless, and a huge part of that was the supportive team. They were friendly, attentive and encouraging throughout.</p>
-            <span class="review-sample-tag">Sample testimonial</span>
-          </article>
-          <article class="review-snippet">
-            <div class="reviewer"><span class="review-avatar avatar-forest">SP</span><div><p>Sai P.</p><span class="review-card-stars google-stars" aria-label="Five stars">★★★★★</span></div></div>
-            <h4>Excellent experience</h4>
-            <p>Everything was smooth and taken care of. Our guides were knowledgeable, kind and always ready to help us along the trail.</p>
-            <span class="review-sample-tag">Sample testimonial</span>
-          </article>
-          <article class="review-snippet">
-            <div class="reviewer"><span class="review-avatar avatar-berry">KP</span><div><p>Kevin P.</p><span class="review-card-stars google-stars" aria-label="Five stars">★★★★★</span></div></div>
-            <h4>A magical Everest journey</h4>
-            <p>The landscape was incredible, but the people made it truly special. We felt welcomed and supported from beginning to end.</p>
-            <span class="review-sample-tag">Sample testimonial</span>
-          </article>
-          <article class="review-snippet">
-            <div class="reviewer"><span class="review-avatar avatar-sun">ML</span><div><p>Mei L.</p><span class="review-card-stars google-stars" aria-label="Five stars">★★★★★</span></div></div>
-            <h4>Professional and genuinely caring</h4>
-            <p>The route, accommodation and pacing were all thoughtfully arranged. We could simply relax and take in the mountains.</p>
-            <span class="review-sample-tag">Sample testimonial</span>
-          </article>
-        </div>
-        <div class="review-carousel-controls" aria-label="Google testimonial controls"><button type="button" data-review-prev aria-label="Previous Google testimonial">&#8249;</button><button type="button" data-review-next aria-label="Next Google testimonial">&#8250;</button></div>
-      </section>
-
-      <div class="review-platform-links"><a href="<?= e(SITE['tripadvisor_reviews_url']) ?>" target="_blank" rel="noopener">Read Tripadvisor Reviews</a><a href="<?= e(SITE['google_reviews_url']) ?>" target="_blank" rel="noopener">Read Google Reviews</a></div>
-      <p class="review-demo-disclosure">These testimonials, names and ratings are fictional placeholders for this website demo, not verified Google or Tripadvisor reviews.</p>
+    <div class="client-review-tabs" role="tablist" aria-label="Review platform">
+      <button class="client-review-tab active" type="button" role="tab" aria-selected="true" aria-controls="tripadvisor-review-panel" data-review-tab="tripadvisor">
+        <svg class="client-tripadvisor-mark" viewBox="0 0 64 40" aria-hidden="true"><path d="M18 10h28M22 10l3-5h14l3 5"/><circle cx="17" cy="23" r="11"/><circle cx="47" cy="23" r="11"/><circle cx="17" cy="23" r="4"/><circle cx="47" cy="23" r="4"/><path d="M28 25h8M8 12 3 8m53 4 5-4"/></svg>
+        <span>Tripadvisor</span><strong>4 sample reviews</strong>
+      </button>
+      <button class="client-review-tab" type="button" role="tab" aria-selected="false" aria-controls="google-review-panel" data-review-tab="google" tabindex="-1">
+        <img class="client-google-logo" src="<?= asset_url('assets/images/google-g-logo.svg') ?>" alt=""><span>Google</span><strong>4 sample reviews</strong>
+      </button>
     </div>
+
+    <?php
+    $clientReviewGroups = [
+      'tripadvisor' => [
+        'url' => SITE['tripadvisor_reviews_url'],
+        'label' => 'Tripadvisor',
+        'reviews' => [
+          ['AR', 'Aarav R.', 'Amazing trek to Everest Base Camp', 'Our guide kept every day organized and relaxed. The views were unforgettable, and the village stops made the whole journey feel personal.'],
+          ['HM', 'Holly M.', 'Highly recommended!', 'The itinerary had the perfect balance of challenge and rest. Every question was answered quickly, and we always felt well supported.'],
+          ['FR', 'Faith R.', 'A wonderful Himalayan experience', 'The team was warm, patient and knowledgeable. Their attention to detail helped us enjoy Nepal with complete confidence.'],
+        ],
+      ],
+      'google' => [
+        'url' => SITE['google_reviews_url'],
+        'label' => 'Google',
+        'reviews' => [
+          ['AY', 'Aisha Y.', 'An experience we will never forget', 'Our trek was seamless, and a huge part of that was the supportive team. They were friendly, attentive and encouraging throughout.'],
+          ['SP', 'Sai P.', 'Excellent experience', 'Everything was smooth and taken care of. Our guides were knowledgeable, kind and always ready to help us along the trail.'],
+          ['KP', 'Kevin P.', 'A magical Everest journey', 'The landscape was incredible, but the people made it truly special. We felt welcomed and supported from beginning to end.'],
+        ],
+      ],
+    ];
+    foreach ($clientReviewGroups as $platform => $group):
+    ?>
+      <div id="<?= e($platform) ?>-review-panel" class="client-review-panel<?= $platform === 'tripadvisor' ? '' : ' hidden' ?>" role="tabpanel" data-review-panel="<?= e($platform) ?>">
+        <div class="client-review-grid">
+          <?php foreach ($group['reviews'] as $review): ?>
+            <article class="client-review-card">
+              <div class="client-review-rating">
+                <span class="client-review-stars" role="img" aria-label="Five out of five stars">★★★★★</span>
+                <?php if ($platform === 'google'): ?><img class="client-google-logo" src="<?= asset_url('assets/images/google-g-logo.svg') ?>" alt=""><?php else: ?><svg class="client-tripadvisor-mark" viewBox="0 0 64 40" aria-hidden="true"><path d="M18 10h28M22 10l3-5h14l3 5"/><circle cx="17" cy="23" r="11"/><circle cx="47" cy="23" r="11"/><circle cx="17" cy="23" r="4"/><circle cx="47" cy="23" r="4"/><path d="M28 25h8M8 12 3 8m53 4 5-4"/></svg><?php endif; ?>
+              </div>
+              <h3><?= e($review[2]) ?></h3>
+              <p><?= e($review[3]) ?></p>
+              <a class="client-review-read" href="<?= e($group['url']) ?>" target="_blank" rel="noopener">Read more +</a>
+              <footer class="client-review-author">
+                <span class="client-review-avatar"><?= e($review[0]) ?><i aria-hidden="true">✓</i></span>
+                <span><strong><?= e($review[1]) ?></strong><small>Sample testimonial</small></span>
+              </footer>
+            </article>
+          <?php endforeach; ?>
+        </div>
+        <a class="client-review-all" href="<?= e($group['url']) ?>" target="_blank" rel="noopener">View all <?= e($group['label']) ?> reviews <span aria-hidden="true">→</span></a>
+      </div>
+    <?php endforeach; ?>
+
+    <p class="client-review-disclosure">These testimonials, names and ratings are fictional placeholders for this website demo, not verified Google or Tripadvisor reviews.</p>
   </div>
 </section>
 
