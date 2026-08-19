@@ -5,6 +5,7 @@ if (!isset($slug, $treks[$slug])) { http_response_code(404); exit('Trek not foun
 $trek = $treks[$slug];
 $pageTitle = $trek['title'];
 $pageDescription = $trek['summary'];
+$includeLeaflet = true;
 $routePoints = $trek['start'] === $trek['end']
     ? $trek['start']
     : $trek['start'] . ' / ' . $trek['end'];
@@ -15,13 +16,73 @@ $tripFacts = [
     ['activity', 'Activity', 'Trekking / Hiking'],
     ['mountain', 'Max. altitude', $trek['altitude']],
     ['season', 'Best season', $trek['season']],
-    ['bed', 'Accommodation', 'Tea houses & hotels'],
+    ['bed', 'Accommodation', $trek['accommodation'] ?? 'Tea houses & hotels'],
     ['meal', 'Meals', 'Set with your plan'],
     ['route', 'Start / End point', $routePoints],
     ['private', 'Trip style', 'Private & personalized'],
     ['guide', 'Guide', 'Experienced local guide'],
     ['price', 'Pricing', 'Personalized proposal'],
 ];
+
+$altitudeProfile = $trek['altitude_profile'];
+$altitudeValues = array_column($altitudeProfile, 1);
+$altitudeMinimum = min($altitudeValues);
+$altitudeMaximum = max($altitudeValues);
+$altitudeRange = max(1, $altitudeMaximum - $altitudeMinimum);
+$altitudeChartWidth = max(900, count($altitudeProfile) * 112);
+$altitudeChartHeight = 350;
+$altitudePlotLeft = 62;
+$altitudePlotRight = 46;
+$altitudePlotTop = 68;
+$altitudePlotBottom = 282;
+$altitudePlotWidth = $altitudeChartWidth - $altitudePlotLeft - $altitudePlotRight;
+$altitudePlotHeight = $altitudePlotBottom - $altitudePlotTop;
+$altitudeChartPoints = [];
+foreach ($altitudeProfile as $index => $stop) {
+    $x = $altitudePlotLeft + ($index * ($altitudePlotWidth / max(1, count($altitudeProfile) - 1)));
+    $y = $altitudePlotBottom - ((($stop[1] - $altitudeMinimum) / $altitudeRange) * $altitudePlotHeight);
+    $altitudeChartPoints[] = ['x' => round($x, 1), 'y' => round($y, 1), 'name' => $stop[0], 'meters' => $stop[1]];
+}
+$altitudeLinePoints = implode(' ', array_map(static fn(array $point): string => $point['x'] . ',' . $point['y'], $altitudeChartPoints));
+$altitudeAreaPoints = $altitudePlotLeft . ',' . $altitudePlotBottom . ' ' . $altitudeLinePoints . ' ' . ($altitudeChartWidth - $altitudePlotRight) . ',' . $altitudePlotBottom;
+$routeMapPoints = array_map(static function (array $stop, int $index) use ($trek): array {
+    $mapOptions = isset($stop[4]) && is_array($stop[4]) ? $stop[4] : [];
+    return [
+        'day' => $index + 1,
+        'name' => $stop[0],
+        'meters' => $stop[1],
+        'lat' => $stop[2],
+        'lng' => $stop[3],
+        'summary' => $trek['itinerary'][$index][1] ?? '',
+        'connectFromPrevious' => $index > 0 && ($mapOptions['connect'] ?? true),
+        'mapFocus' => $mapOptions['focus'] ?? true,
+    ];
+}, $altitudeProfile, array_keys($altitudeProfile));
+$routeMapJson = json_encode($routeMapPoints, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+$infographicPoints = [];
+$infographicItemsPerRow = 5;
+$infographicBaseY = 548;
+$infographicRowGap = 128;
+$infographicXGap = 220;
+foreach ($altitudeProfile as $index => $stop) {
+    $row = intdiv($index, $infographicItemsPerRow);
+    $column = $index % $infographicItemsPerRow;
+    if ($row % 2 === 1) { $column = $infographicItemsPerRow - 1 - $column; }
+    $x = 105 + ($column * $infographicXGap);
+    $y = $infographicBaseY - ($row * $infographicRowGap) + (sin($index * 1.35) * 18);
+    $infographicPoints[] = ['x' => round($x, 1), 'y' => round($y, 1), 'name' => $stop[0], 'meters' => $stop[1]];
+}
+$infographicPath = '';
+foreach ($infographicPoints as $index => $point) {
+    if ($index === 0) {
+        $infographicPath = 'M ' . $point['x'] . ' ' . $point['y'];
+        continue;
+    }
+    $previous = $infographicPoints[$index - 1];
+    $middleX = round(($previous['x'] + $point['x']) / 2, 1);
+    $infographicPath .= ' C ' . $middleX . ' ' . $previous['y'] . ', ' . $middleX . ' ' . $point['y'] . ', ' . $point['x'] . ' ' . $point['y'];
+}
 
 require __DIR__ . '/header.php';
 ?>
@@ -110,8 +171,129 @@ require __DIR__ . '/header.php';
 
       <section class="trip-content-block" id="route">
         <p class="eyebrow text-pine">Route &amp; altitude</p><h2>Climb steadily. Adapt deliberately.</h2>
-        <div class="trip-altitude-card" aria-label="Illustrative altitude profile"><div class="trip-altitude-chart"><i></i><i></i><i></i><i></i><span class="trip-altitude-start"><?= e($trek['start']) ?></span><strong><?= e($trek['altitude']) ?></strong><span class="trip-altitude-end"><?= e($trek['end']) ?></span></div><p>Illustrative profile, not a navigation chart. Your final plan contains route-specific details.</p></div>
+        <div class="trip-altitude-card" data-altitude-profile aria-label="Illustrative day-by-day altitude profile">
+          <div class="trip-altitude-toolbar">
+            <div class="trip-altitude-units" aria-label="Altitude unit">
+              <span>Altitude in:</span>
+              <button class="active" type="button" data-altitude-unit="meter" aria-pressed="true">Meter</button>
+              <i aria-hidden="true"></i>
+              <button type="button" data-altitude-unit="feet" aria-pressed="false">Feet</button>
+            </div>
+            <button class="trip-altitude-download" type="button" data-altitude-download data-download-name="<?= e($trek['slug']) ?>-altitude-profile.svg">
+              <span aria-hidden="true">&#8681;</span> Download
+            </button>
+          </div>
+
+          <div class="trip-altitude-scroll">
+            <svg class="trip-altitude-svg" width="<?= $altitudeChartWidth ?>" height="<?= $altitudeChartHeight ?>" viewBox="0 0 <?= $altitudeChartWidth ?> <?= $altitudeChartHeight ?>" role="img" aria-labelledby="altitude-chart-title-<?= e($trek['slug']) ?> altitude-chart-desc-<?= e($trek['slug']) ?>">
+              <title id="altitude-chart-title-<?= e($trek['slug']) ?>"><?= e($trek['title']) ?> altitude profile</title>
+              <desc id="altitude-chart-desc-<?= e($trek['slug']) ?>">An illustrative line chart showing the planned overnight stops and elevations for each day.</desc>
+              <defs>
+                <linearGradient id="altitude-fill-<?= e($trek['slug']) ?>" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#dceef6" stop-opacity=".82"></stop>
+                  <stop offset="1" stop-color="#f4f8fa" stop-opacity=".75"></stop>
+                </linearGradient>
+              </defs>
+              <line class="trip-altitude-gridline" x1="<?= $altitudePlotLeft ?>" y1="<?= $altitudePlotTop ?>" x2="<?= $altitudeChartWidth - $altitudePlotRight ?>" y2="<?= $altitudePlotTop ?>"></line>
+              <line class="trip-altitude-gridline" x1="<?= $altitudePlotLeft ?>" y1="<?= ($altitudePlotTop + $altitudePlotBottom) / 2 ?>" x2="<?= $altitudeChartWidth - $altitudePlotRight ?>" y2="<?= ($altitudePlotTop + $altitudePlotBottom) / 2 ?>"></line>
+              <line class="trip-altitude-axis" x1="<?= $altitudePlotLeft ?>" y1="<?= $altitudePlotBottom ?>" x2="<?= $altitudeChartWidth - $altitudePlotRight ?>" y2="<?= $altitudePlotBottom ?>"></line>
+              <polygon class="trip-altitude-area" points="<?= $altitudeAreaPoints ?>" fill="url(#altitude-fill-<?= e($trek['slug']) ?>)"></polygon>
+              <polyline class="trip-altitude-line" points="<?= $altitudeLinePoints ?>"></polyline>
+              <?php foreach ($altitudeChartPoints as $index => $point): ?>
+                <?php
+                $labelLines = array_slice(explode("\n", wordwrap($point['name'], 15, "\n", true)), 0, 2);
+                $labelY = $point['y'] - (count($labelLines) * 13) - 16 - (($index % 2) * 7);
+                if ($labelY < 16) { $labelY = $point['y'] + 20; }
+                $feet = (int) round($point['meters'] * 3.28084);
+                ?>
+                <g class="trip-altitude-point">
+                  <circle cx="<?= $point['x'] ?>" cy="<?= $point['y'] ?>" r="4"></circle>
+                  <text class="trip-altitude-stop" x="<?= $point['x'] ?>" y="<?= round($labelY, 1) ?>" text-anchor="middle">
+                    <?php foreach ($labelLines as $lineIndex => $line): ?><tspan x="<?= $point['x'] ?>" dy="<?= $lineIndex === 0 ? 0 : 13 ?>"><?= e($line) ?></tspan><?php endforeach; ?>
+                    <tspan class="trip-altitude-value" x="<?= $point['x'] ?>" dy="14" data-meter="<?= number_format($point['meters']) ?> m" data-feet="<?= number_format($feet) ?> ft"><?= number_format($point['meters']) ?> m</tspan>
+                  </text>
+                  <text class="trip-altitude-day" x="<?= $point['x'] ?>" y="322" text-anchor="middle">Day <?= $index + 1 ?></text>
+                </g>
+              <?php endforeach; ?>
+            </svg>
+          </div>
+          <p>Illustrative profile, not a navigation chart. Elevations and daily stops may change in your confirmed route.</p>
+        </div>
         <div class="trip-route-notes"><p><strong>Difficulty</strong><?= e($trek['difficulty']) ?>, assessed from daily distance, elevation and conditions.</p><p><strong>Best season</strong><?= e($trek['season']) ?> is the usual planning window, though mountain conditions vary.</p></div>
+
+        <section class="trip-interactive-map" data-route-map data-route-points="<?= e((string) $routeMapJson) ?>" aria-labelledby="interactive-map-title-<?= e($trek['slug']) ?>">
+          <header class="trip-map-heading">
+            <div><p class="eyebrow text-pine">Follow the journey</p><h3 id="interactive-map-title-<?= e($trek['slug']) ?>">Interactive Map</h3></div>
+            <div class="trip-map-tabs" role="tablist" aria-label="Route view">
+              <button class="active" type="button" role="tab" aria-selected="true" data-route-view="map">Map</button>
+              <button type="button" role="tab" aria-selected="false" data-route-view="elevation">Elevation</button>
+            </div>
+          </header>
+
+          <div class="trip-map-panel" data-route-panel="map">
+            <nav class="trip-map-days" aria-label="Select itinerary day"></nav>
+            <div class="trip-map-canvas" id="route-map-<?= e($trek['slug']) ?>" aria-label="Illustrative trek route map"></div>
+            <article class="trip-map-summary" aria-live="polite">
+              <span>Day 1</span><strong></strong><p></p>
+            </article>
+          </div>
+
+          <div class="trip-map-elevation-panel hidden" data-route-panel="elevation">
+            <div class="trip-map-elevation-list" aria-label="Day-by-day elevation list"></div>
+          </div>
+          <p class="trip-map-disclaimer">Approximate route visualization only. It is not intended for trail navigation.</p>
+        </section>
+
+        <section class="trip-infographic" aria-labelledby="infographic-title-<?= e($trek['slug']) ?>">
+          <header class="trip-infographic-heading">
+            <div><p class="eyebrow text-pine">Route at a glance</p><h3 id="infographic-title-<?= e($trek['slug']) ?>">Infographic Map</h3></div>
+            <button class="trip-infographic-download" type="button" data-svg-download data-download-name="<?= e($trek['slug']) ?>-infographic-map.svg">Download <span aria-hidden="true">&#8681;</span></button>
+          </header>
+          <div class="trip-infographic-scroll">
+            <svg class="trip-infographic-svg" width="1100" height="690" viewBox="0 0 1100 690" role="img" aria-labelledby="infographic-svg-title-<?= e($trek['slug']) ?> infographic-svg-desc-<?= e($trek['slug']) ?>">
+              <title id="infographic-svg-title-<?= e($trek['slug']) ?>"><?= e($trek['title']) ?> infographic route map</title>
+              <desc id="infographic-svg-desc-<?= e($trek['slug']) ?>">A schematic route showing each itinerary day, stop and approximate elevation.</desc>
+              <style>
+                .info-bg{fill:#fff}.info-mountain-a{fill:#1591a1}.info-mountain-b{fill:#0b7285}.info-snow{fill:#eefafa}.info-range{fill:#237a57;font:700 10px Arial,sans-serif;letter-spacing:.04em}.info-route-shadow{fill:none;stroke:#d9ecdf;stroke-width:12;stroke-linecap:round;stroke-linejoin:round}.info-route{fill:none;stroke:#299b38;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}.info-day{fill:#ffd326;stroke:#fff;stroke-width:3}.info-end{fill:#8d0d2d;stroke:#fff;stroke-width:3}.info-day-text{fill:#163b29;font:800 11px Arial,sans-serif}.info-label{fill:#267f3f;font:700 10px Arial,sans-serif}.info-altitude{fill:#536a5c;font:600 9px Arial,sans-serif}.info-legend{fill:#fff;stroke:#237a57;stroke-width:2}.info-legend-title{fill:#111;font:800 11px Arial,sans-serif}.info-legend-text{fill:#31443a;font:700 9px Arial,sans-serif}.info-ribbon{fill:#237a27}.info-ribbon-text{fill:#fff;font:800 18px Arial,sans-serif;letter-spacing:.04em}.info-note{fill:#6b7b72;font:10px Arial,sans-serif}
+              </style>
+              <rect class="info-bg" width="1100" height="690" rx="16"></rect>
+
+              <g transform="translate(420 30)"><path class="info-mountain-a" d="M0 58 42 5l25 31 18-20 42 42Z"></path><path class="info-mountain-b" d="m42 5 25 31 18-20 42 42H62Z"></path><path class="info-snow" d="m42 5 12 15 8-5 10 15-5 6Z"></path><text class="info-range" x="63" y="74" text-anchor="middle"><?= e($trek['region']) ?></text></g>
+              <g transform="translate(720 22)"><path class="info-mountain-a" d="M0 58 38 10l22 27 20-23 44 44Z"></path><path class="info-mountain-b" d="m38 10 22 27 20-23 44 44H58Z"></path><path class="info-snow" d="m38 10 11 14 8-5 8 13-5 5Z"></path><text class="info-range" x="62" y="74" text-anchor="middle">Highest point <?= e($trek['altitude']) ?></text></g>
+
+              <path class="info-route-shadow" d="<?= e($infographicPath) ?>"></path>
+              <path class="info-route" d="<?= e($infographicPath) ?>"></path>
+
+              <?php foreach ($infographicPoints as $index => $point): ?>
+                <?php
+                $isEndpoint = $index === 0 || $index === count($infographicPoints) - 1;
+                $labelLines = array_slice(explode("\n", wordwrap($point['name'], 17, "\n", true)), 0, 2);
+                $labelAbove = $point['y'] > 490 || $index % 2 === 0;
+                $labelY = $labelAbove ? $point['y'] - 34 - ((count($labelLines) - 1) * 12) : $point['y'] + 35;
+                ?>
+                <g>
+                  <circle class="<?= $isEndpoint ? 'info-end' : 'info-day' ?>" cx="<?= $point['x'] ?>" cy="<?= $point['y'] ?>" r="<?= $isEndpoint ? 11 : 16 ?>"></circle>
+                  <?php if (!$isEndpoint): ?><text class="info-day-text" x="<?= $point['x'] ?>" y="<?= $point['y'] + 4 ?>" text-anchor="middle"><?= $index + 1 ?></text><?php endif; ?>
+                  <text class="info-label" x="<?= $point['x'] ?>" y="<?= round($labelY, 1) ?>" text-anchor="middle">
+                    <?php foreach ($labelLines as $lineIndex => $line): ?><tspan x="<?= $point['x'] ?>" dy="<?= $lineIndex === 0 ? 0 : 12 ?>"><?= e($line) ?></tspan><?php endforeach; ?>
+                    <tspan class="info-altitude" x="<?= $point['x'] ?>" dy="12"><?= number_format($point['meters']) ?> m</tspan>
+                  </text>
+                </g>
+              <?php endforeach; ?>
+
+              <g transform="translate(25 24)">
+                <rect class="info-legend" width="170" height="118" rx="8"></rect>
+                <text class="info-legend-title" x="14" y="23">LEGEND</text>
+                <circle class="info-day" cx="22" cy="45" r="8"></circle><text class="info-legend-text" x="40" y="49">ITINERARY DAY</text>
+                <line class="info-route" x1="14" y1="70" x2="31" y2="70"></line><text class="info-legend-text" x="40" y="74">TREKKING TRAIL</text>
+                <circle class="info-end" cx="22" cy="96" r="7"></circle><text class="info-legend-text" x="40" y="100">START / FINISH</text>
+              </g>
+              <text class="info-note" x="1075" y="615" text-anchor="end">Schematic illustration — not for navigation</text>
+              <rect class="info-ribbon" x="0" y="630" width="1100" height="60"></rect>
+              <text class="info-ribbon-text" x="550" y="667" text-anchor="middle"><?= e(strtoupper($trek['title'])) ?> — <?= e(strtoupper($trek['duration'])) ?></text>
+            </svg>
+          </div>
+        </section>
       </section>
 
       <section class="trip-content-block" id="comfort">

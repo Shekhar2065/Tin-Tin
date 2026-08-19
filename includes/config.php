@@ -13,6 +13,10 @@ const SITE = [
     // Replace these searches with Tin-Tin's exact verified profile URLs when supplied.
     'google_reviews_url' => 'https://www.google.com/search?q=Tin-Tin+Trekking+%26+Adventure+Kathmandu+reviews',
     'tripadvisor_reviews_url' => 'https://www.tripadvisor.com/Search?q=Tin-Tin%20Trekking%20%26%20Adventure%20Kathmandu',
+    // Replace these discovery links with Tin-Tin's exact social profile URLs when supplied.
+    'instagram_url' => 'https://www.instagram.com/explore/search/keyword/?q=tin%20tin%20trekking',
+    'tiktok_url' => 'https://www.tiktok.com/search?q=Tin-Tin%20Trekking%20Adventure',
+    'facebook_url' => 'https://www.facebook.com/search/top?q=Tin-Tin%20Trekking%20%26%20Adventure',
 ];
 
 function base_path(): string

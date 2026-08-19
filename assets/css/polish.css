@@ -653,6 +653,48 @@ button,
   object-fit: cover;
 }
 
+/* Desktop image accordion: expand the photo currently under the pointer. */
+@media (min-width: 901px) and (hover: hover) {
+  .trip-product-gallery {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .trip-product-gallery figure {
+    min-width: 0;
+    flex: .72 1 0;
+    cursor: zoom-in;
+    transition: flex-grow .65s var(--motion-smooth), filter .35s ease;
+  }
+
+  .trip-product-gallery .trip-product-gallery-main {
+    flex-grow: 1.6;
+  }
+
+  .trip-product-gallery:hover figure {
+    flex-grow: .72;
+  }
+
+  .trip-product-gallery figure:hover {
+    flex-grow: 1.6;
+  }
+
+  .trip-product-gallery img {
+    transition: transform .65s var(--motion-smooth);
+  }
+
+  .trip-product-gallery figure:hover img {
+    transform: scale(1.025);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trip-product-gallery figure,
+  .trip-product-gallery img {
+    transition: none !important;
+  }
+}
+
 .trip-facts-section {
   border-bottom: 0;
   padding: clamp(2rem, 4vw, 3.75rem) 0;
@@ -916,41 +958,78 @@ button,
 .trip-altitude-card {
   margin-top: 2rem;
   border: 1px solid var(--line);
-  background: #f8fafc;
-  padding: 1.5rem;
+  background: #fff;
+  padding: 1.35rem 1.35rem 1rem;
 }
 
-.trip-altitude-chart {
-  position: relative;
-  height: 190px;
-  overflow: hidden;
-  border-bottom: 1px solid #9aabb6;
+.trip-altitude-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .75rem;
 }
 
-.trip-altitude-chart i {
-  position: absolute;
-  height: 3px;
-  transform-origin: left;
-  background: var(--pine);
+.trip-altitude-units {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  color: #111;
+  font-size: .78rem;
+  font-weight: 750;
 }
 
-.trip-altitude-chart i:nth-child(1) { bottom: 38px; left: 0; width: 28%; transform: rotate(-9deg); }
-.trip-altitude-chart i:nth-child(2) { bottom: 80px; left: 27%; width: 28%; transform: rotate(-16deg); }
-.trip-altitude-chart i:nth-child(3) { top: 42px; left: 53%; width: 22%; transform: rotate(11deg); }
-.trip-altitude-chart i:nth-child(4) { top: 83px; left: 73%; width: 31%; transform: rotate(20deg); }
+.trip-altitude-units span { margin-right: .15rem; font-weight: 650; }
+.trip-altitude-units i { width: 1px; height: 18px; background: #d6dce0; }
 
-.trip-altitude-chart span,
-.trip-altitude-chart strong {
-  position: absolute;
-  color: var(--ink);
+.trip-altitude-units button {
+  color: #7a8187;
+  font-size: .75rem;
+  font-weight: 800;
+  transition: color .2s ease;
+}
+
+.trip-altitude-units button.active,
+.trip-altitude-units button:hover { color: #111; }
+
+.trip-altitude-download {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  color: #237a57;
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.trip-altitude-download span { font-size: 1.1rem; line-height: 1; }
+
+.trip-altitude-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: #237a57 #edf1ef;
+  scrollbar-width: thin;
+}
+
+.trip-altitude-scroll::-webkit-scrollbar { height: 8px; }
+.trip-altitude-scroll::-webkit-scrollbar-track { border-radius: 999px; background: #edf1ef; }
+.trip-altitude-scroll::-webkit-scrollbar-thumb { border-radius: 999px; background: #237a57; }
+
+.trip-altitude-svg {
+  display: block;
+  max-width: none;
   font-family: var(--font-ui);
-  font-size: .65rem;
 }
 
-.trip-altitude-start { bottom: .5rem; left: 0; }
-.trip-altitude-end { right: 0; bottom: .5rem; }
-.trip-altitude-chart strong { top: .25rem; left: 54%; color: var(--pine); }
-.trip-altitude-card > p { margin-top: .8rem; color: #7a8b96; font-size: .7rem; }
+.trip-altitude-gridline { stroke: #edf1f3; stroke-width: 1; stroke-dasharray: 4 6; }
+.trip-altitude-axis { stroke: #c5cdd2; stroke-width: 1; }
+.trip-altitude-area { pointer-events: none; }
+.trip-altitude-line { fill: none; stroke: #237a57; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+.trip-altitude-point circle { fill: #2874dc; stroke: #fff; stroke-width: 2; }
+.trip-altitude-stop { fill: #56636d; font-size: 10px; }
+.trip-altitude-value { fill: #303b43; font-size: 9.5px; font-weight: 750; }
+.trip-altitude-day { fill: #6c757c; font-size: 9.5px; }
+.trip-altitude-card > p { margin-top: .85rem; color: #7a8b96; font-size: .7rem; line-height: 1.55; }
 
 .trip-route-notes {
   display: grid;
@@ -961,6 +1040,210 @@ button,
 
 .trip-route-notes p { color: #5a707e; font-size: .82rem; line-height: 1.65; }
 .trip-route-notes strong { display: block; margin-bottom: .3rem; color: var(--ink); }
+
+.trip-interactive-map { margin-top: 3rem; }
+
+.trip-map-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.trip-map-heading h3 {
+  margin-top: .45rem;
+  color: #111;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 780;
+  letter-spacing: -.04em;
+}
+
+.trip-map-tabs {
+  display: inline-flex;
+  border: 1px solid #e3e7e5;
+  border-radius: 999px;
+  background: #fff;
+  padding: .25rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, .08);
+}
+
+.trip-map-tabs button {
+  min-width: 76px;
+  border-radius: 999px;
+  padding: .55rem .8rem;
+  color: #71808b;
+  font-size: .7rem;
+  font-weight: 800;
+  transition: background .2s ease, color .2s ease;
+}
+
+.trip-map-tabs button.active { background: #237a57; color: #fff; }
+
+.trip-map-panel {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  height: 430px;
+  overflow: hidden;
+  border: 1px solid #dde4df;
+  border-radius: 18px;
+  background: #e8efe9;
+}
+
+.trip-map-canvas { width: 100%; height: 100%; }
+.trip-map-canvas .leaflet-control-attribution { font-size: 9px; }
+
+.trip-map-days {
+  position: absolute;
+  z-index: 500;
+  top: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  width: 86px;
+  overflow-y: auto;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .96);
+  padding: .45rem;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, .14);
+  scrollbar-width: thin;
+}
+
+.trip-map-days button {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  padding: .65rem .35rem;
+  color: #71808b;
+  font-size: .62rem;
+  font-weight: 750;
+  text-align: center;
+}
+
+.trip-map-days button.active { background: #e7f3ee; color: #237a57; }
+
+.trip-map-summary {
+  position: absolute;
+  z-index: 500;
+  top: 1rem;
+  left: 7.35rem;
+  width: min(450px, calc(100% - 9rem));
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .97);
+  padding: 1rem 1.15rem;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, .14);
+}
+
+.trip-map-summary span {
+  display: inline-flex;
+  border-radius: 6px;
+  background: #e8f3ee;
+  padding: .28rem .48rem;
+  color: #237a57;
+  font-size: .58rem;
+  font-weight: 850;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.trip-map-summary strong { display: block; margin-top: .55rem; color: #111; font-size: .78rem; }
+.trip-map-summary p { margin-top: .3rem; color: #536977; font-size: .69rem; line-height: 1.55; }
+
+.trip-map-elevation-panel {
+  min-height: 430px;
+  overflow-x: auto;
+  border: 1px solid #dde4df;
+  border-radius: 18px;
+  background: #f7faf8;
+  padding: 2rem;
+}
+
+.trip-map-elevation-list {
+  display: flex;
+  min-width: 720px;
+  min-height: 350px;
+  align-items: flex-end;
+  gap: .55rem;
+  border-bottom: 1px solid #bdc9c2;
+}
+
+.trip-map-elevation-item {
+  display: flex;
+  flex: 1 0 60px;
+  height: 100%;
+  min-width: 60px;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: center;
+}
+
+.trip-map-elevation-item strong { color: #31434d; font-size: .57rem; }
+.trip-map-elevation-item i { display: block; width: 14px; margin: .45rem auto; border-radius: 999px 999px 0 0; background: linear-gradient(#55aa86, #237a57); }
+.trip-map-elevation-item span { min-height: 28px; color: #6e7c85; font-size: .55rem; line-height: 1.3; }
+.trip-map-disclaimer { margin-top: .7rem; color: #7a8b96; font-size: .66rem; }
+
+.trip-infographic { margin-top: 3rem; }
+
+.trip-infographic-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.trip-infographic-heading h3 {
+  margin-top: .45rem;
+  color: #111;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 780;
+  letter-spacing: -.04em;
+}
+
+.trip-infographic-download {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: .45rem;
+  border-radius: 999px;
+  background: #55b889;
+  padding: .7rem 1rem;
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 850;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.trip-infographic-download:hover { background: #237a57; transform: translateY(-1px); }
+
+.trip-infographic-scroll {
+  overflow-x: auto;
+  border: 1px solid #dfe6e2;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, .07);
+  scrollbar-color: #237a57 #edf1ef;
+  scrollbar-width: thin;
+}
+
+.trip-infographic-svg {
+  display: block;
+  width: 100%;
+  min-width: 760px;
+  height: auto;
+}
+
+@media (max-width: 700px) {
+  .trip-map-heading { align-items: flex-start; flex-direction: column; }
+  .trip-map-panel { height: 470px; }
+  .trip-map-days { right: .7rem; bottom: auto; left: .7rem; width: auto; display: flex; overflow-x: auto; overflow-y: hidden; }
+  .trip-map-days button { flex: 0 0 58px; }
+  .trip-map-summary { top: auto; right: .7rem; bottom: .7rem; left: .7rem; width: auto; }
+  .trip-map-elevation-panel { padding: 1rem; }
+  .trip-infographic-heading { align-items: flex-start; flex-direction: column; }
+}
 
 .trip-comfort-grid {
   display: grid;
@@ -1076,7 +1359,7 @@ button,
 
 .featured-activities .offer-tabs {
   display: grid;
-  grid-template-columns: repeat(5, minmax(180px, 1fr));
+  grid-template-columns: repeat(2, minmax(210px, 270px));
   overflow-x: auto;
   border: 0;
   border-bottom: 1px solid #e2e7ea;
@@ -1129,6 +1412,20 @@ button,
   white-space: nowrap;
 }
 
+.featured-activities .offer-tab span b {
+  display: inline-flex;
+  margin-left: .35rem;
+  border-radius: 999px;
+  background: #eee9ff;
+  padding: .18rem .42rem;
+  color: #6d4fd3;
+  font-size: .54rem;
+  font-weight: 850;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
 .featured-activities .offer-tab.active {
   background: #fff;
   color: var(--ink);
@@ -1140,7 +1437,7 @@ button,
 
 .featured-activities .offer-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(.8rem, 1.6vw, 1.25rem);
 }
 
@@ -1242,6 +1539,52 @@ button,
   font-family: var(--font-ui);
   font-size: .7rem;
   font-weight: 750;
+}
+
+.activity-coming-soon {
+  display: grid;
+  min-height: 340px;
+  place-items: center;
+  border: 1px dashed #b9c8c0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f7faf8, #eef5f1);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.activity-coming-soon svg {
+  width: 76px;
+  height: 76px;
+  fill: none;
+  stroke: #237a57;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.activity-coming-soon p {
+  margin-top: 1rem;
+  color: #237a57;
+  font-size: .65rem;
+  font-weight: 850;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.activity-coming-soon h3 {
+  color: #111;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 780;
+  letter-spacing: -.05em;
+  line-height: 1;
+}
+
+.activity-coming-soon span {
+  max-width: 540px;
+  color: #61727c;
+  font-size: .82rem;
+  line-height: 1.7;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1954,8 +2297,9 @@ button,
 }
 
 .destination-card-tab {
+  display: block;
   position: relative;
-  height: clamp(300px, 30vw, 390px);
+  height: clamp(230px, 23vw, 300px);
   overflow: hidden;
   border: 2px solid transparent;
   border-radius: 16px;
@@ -1963,6 +2307,32 @@ button,
   text-align: left;
   transition: transform .35s var(--motion-smooth), border-color .3s ease, box-shadow .3s ease;
 }
+
+.destination-album-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.destination-album-link b {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  margin-top: .75rem;
+  color: #8ce0bd;
+  font-size: .72rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.destination-album-link b i {
+  font-size: 1rem;
+  font-style: normal;
+  transition: transform .2s ease;
+}
+
+.destination-album-link:hover b i { transform: translateX(.25rem); }
 
 .destination-card-tab::after,
 .destination-region-card::after {
@@ -2141,7 +2511,7 @@ button,
 
 @media (max-width: 900px) {
   .destination-card-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .destination-card-tab:last-child { grid-column: 1 / -1; height: 300px; }
+  .destination-card-tab:last-child { grid-column: 1 / -1; height: 260px; }
   .destination-region-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -2151,7 +2521,7 @@ button,
   .destination-gallery-shell::before { display: none; }
   .destination-card-tabs { grid-template-columns: 1fr; }
   .destination-card-tab,
-  .destination-card-tab:last-child { grid-column: auto; height: 285px; }
+  .destination-card-tab:last-child { grid-column: auto; height: 230px; }
   .destination-detail-heading { align-items: flex-start; flex-direction: column; gap: .4rem; }
   .destination-region-grid,
   .destination-region-grid-single { grid-template-columns: 1fr; }

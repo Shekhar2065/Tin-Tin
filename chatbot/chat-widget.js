@@ -52,6 +52,7 @@
       </section>
       <button class="tt-chat-launcher" type="button" aria-label="Open chat"
         aria-controls="tt-chat-panel" aria-expanded="false">
+        <span class="tt-chat-unread" aria-hidden="true" hidden>1</span>
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M20 11.5a7.5 7.5 0 01-8 7.5 9.2 9.2 0 01-3.4-.65L4 20l1.45-4A7.2 7.2 0 014 11.5 7.5 7.5 0 0112 4a7.5 7.5 0 018 7.5z"
             fill="none" stroke="currentColor" stroke-width="1.8"
@@ -62,6 +63,7 @@
 
     const panel = root.querySelector(".tt-chat-panel");
     const launcher = root.querySelector(".tt-chat-launcher");
+    const unreadBadge = root.querySelector(".tt-chat-unread");
     const invite = root.querySelector(".tt-chat-invite");
     const inviteOpen = root.querySelector(".tt-chat-invite-open");
     const inviteClose = root.querySelector(".tt-chat-invite-close");
@@ -73,14 +75,30 @@
 
     // Memory only: refreshing or leaving the page clears this conversation.
     const conversation = [];
+    const inviteSessionKey = "tt-chat-invite-shown";
+    const unreadSessionKey = "tt-chat-unread";
     let waiting = false;
-    let inviteDismissed = false;
+    let inviteDismissed = hasSeenInvite();
+    let audioContext = null;
 
     addMessage("assistant", greeting);
+    setUnread(hasUnreadMessage());
 
     window.setTimeout(function () {
-      if (panel.hidden && !inviteDismissed) invite.hidden = false;
+      if (panel.hidden && !inviteDismissed) {
+        rememberInvite();
+        invite.hidden = false;
+        setUnread(true);
+        const soundAttemptedAt = performance.now();
+        prepareReplySound().then(function () {
+          if (!invite.hidden && performance.now() - soundAttemptedAt < 500) playReplySound();
+        });
+      }
     }, 1200);
+
+    // A prior visitor interaction lets browsers permit the later notification chime.
+    document.addEventListener("pointerdown", prepareReplySound, { once: true, passive: true });
+    document.addEventListener("keydown", prepareReplySound, { once: true });
 
     launcher.addEventListener("click", function () {
       const willOpen = panel.hidden;
@@ -88,7 +106,10 @@
       panel.hidden = !willOpen;
       launcher.setAttribute("aria-expanded", String(willOpen));
       launcher.setAttribute("aria-label", willOpen ? "Close chat" : "Open chat");
-      if (willOpen) input.focus();
+      if (willOpen) {
+        setUnread(false);
+        input.focus();
+      }
     });
 
     inviteOpen.addEventListener("click", function () {
@@ -96,6 +117,7 @@
       panel.hidden = false;
       launcher.setAttribute("aria-expanded", "true");
       launcher.setAttribute("aria-label", "Close chat");
+      setUnread(false);
       input.focus();
     });
 
@@ -121,6 +143,8 @@
 
       const message = input.value.trim();
       if (!message) return;
+
+      prepareReplySound();
 
       // Snapshot history before adding this new user turn.
       const history = conversation.slice(-10);
@@ -159,6 +183,8 @@
           { role: "assistant", content: data.reply },
         );
         addMessage("assistant", data.reply);
+        playReplySound();
+        if (panel.hidden) setUnread(true);
       } catch (error) {
         console.warn("Tin-Tin chat is unavailable", {
           name: error instanceof Error ? error.name : "UnknownError",
@@ -183,7 +209,50 @@
 
     function dismissInvite() {
       inviteDismissed = true;
+      rememberInvite();
       invite.hidden = true;
+    }
+
+    function hasSeenInvite() {
+      try {
+        return window.sessionStorage.getItem(inviteSessionKey) === "1";
+      } catch {
+        return false;
+      }
+    }
+
+    function rememberInvite() {
+      inviteDismissed = true;
+      try {
+        window.sessionStorage.setItem(inviteSessionKey, "1");
+      } catch {
+        // Keep the in-memory value when browser storage is unavailable.
+      }
+    }
+
+    function hasUnreadMessage() {
+      try {
+        return window.sessionStorage.getItem(unreadSessionKey) === "1";
+      } catch {
+        return false;
+      }
+    }
+
+    function setUnread(value) {
+      unreadBadge.hidden = !value;
+      try {
+        if (value) {
+          window.sessionStorage.setItem(unreadSessionKey, "1");
+        } else {
+          window.sessionStorage.removeItem(unreadSessionKey);
+        }
+      } catch {
+        // The visible badge still works when browser storage is unavailable.
+      }
+      launcher.setAttribute(
+        "aria-label",
+        value && panel.hidden ? "Open chat, 1 unread message" : panel.hidden ? "Open chat" : "Close chat",
+      );
     }
 
     function addMessage(role, text) {
@@ -224,6 +293,39 @@
     function scrollToLatest() {
       requestAnimationFrame(function () {
         messages.scrollTop = messages.scrollHeight;
+      });
+    }
+
+    function prepareReplySound() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return Promise.resolve();
+        if (!audioContext) audioContext = new AudioContext();
+        if (audioContext.state === "suspended") {
+          return audioContext.resume().catch(function () {});
+        }
+      } catch {
+        audioContext = null;
+      }
+      return Promise.resolve();
+    }
+
+    function playReplySound() {
+      if (!audioContext || audioContext.state !== "running") return;
+      const now = audioContext.currentTime;
+      const gain = audioContext.createGain();
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.035, now + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+      gain.connect(audioContext.destination);
+
+      [659.25, 880].forEach(function (frequency, index) {
+        const oscillator = audioContext.createOscillator();
+        oscillator.type = "sine";
+        oscillator.frequency.value = frequency;
+        oscillator.connect(gain);
+        oscillator.start(now + index * 0.055);
+        oscillator.stop(now + 0.18 + index * 0.055);
       });
     }
   }

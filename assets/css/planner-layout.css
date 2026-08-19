@@ -24,11 +24,19 @@
   object-position: center 48%;
 }
 
+.reference-hero-video {
+  z-index: 0;
+  display: block;
+  background: #071828;
+  transform: scale(1.08);
+  transform-origin: center 46%;
+}
+
 .reference-hero-shade {
   z-index: 1;
   background:
-    linear-gradient(180deg, rgba(3, 13, 22, .12) 0%, rgba(3, 13, 22, .04) 38%, rgba(3, 13, 22, .76) 100%),
-    linear-gradient(90deg, rgba(3, 13, 22, .18), transparent 35%, transparent 65%, rgba(3, 13, 22, .15));
+    linear-gradient(180deg, rgba(3, 13, 22, .18) 0%, rgba(3, 13, 22, .24) 48%, rgba(3, 13, 22, .8) 100%),
+    linear-gradient(90deg, rgba(3, 13, 22, .22), transparent 35%, transparent 65%, rgba(3, 13, 22, .2));
 }
 
 .reference-hero::after {
@@ -216,7 +224,12 @@
   }
 
   .reference-hero-image {
-    object-position: 58% center;
+    object-position: 54% center;
+  }
+
+  .reference-hero-video {
+    transform: scale(1.03);
+    transform-origin: 54% center;
   }
 
   .reference-hero-inner {

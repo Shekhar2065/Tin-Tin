@@ -6,38 +6,17 @@ $featuredActivities = [
   'trekking' => [
     ['Everest Base Camp Trek','Everest Region','15 days','Challenging','assets/images/everest-hero.png','Walk through Sherpa country to the foot of the world’s highest mountain.','treks/everest-base-camp.php'],
     ['Annapurna Base Camp Trek','Annapurna Region','11 days','Moderate','assets/images/annapurna.png','Forest, mountain villages and the extraordinary Annapurna Sanctuary.','treks/annapurna-base-camp.php'],
-    ['Langtang Valley Trek','Langtang Region','9 days','Moderate','assets/images/manaslu.png','A close-to-Kathmandu journey rich in valley landscapes and Tamang culture.','treks/langtang-valley.php'],
-    ['Manaslu Circuit Trek','Manaslu Region','17 days','Challenging','assets/images/manaslu.png','A quieter high circuit through remote villages and the Larkya La.','treks/manaslu-circuit.php'],
+    ['Upper Dolpo Trek','Dolpo Region','22 days','Challenging','assets/images/tibet-plateau.png','Remote high-desert landscapes, ancient villages and a carefully planned journey through Dolpo.','treks/upper-dolpo.php'],
   ],
-  'camping' => [
-    ['Remote Nepal Camping Journey','Western Nepal','Tailored','Challenging','assets/images/manaslu.png','A supported tented journey for routes where teahouse infrastructure is limited.','budget-plan.php?trek=Remote+Nepal+Camping+Journey'],
-    ['Dhaulagiri Circuit Camping','Dhaulagiri Region','18 days','Challenging','assets/images/everest-hero.png','High mountain camps, wild valleys and a carefully paced expedition-style route.','budget-plan.php?trek=Dhaulagiri+Circuit+Camping'],
-    ['Kanchenjunga Camp Trek','Eastern Nepal','Tailored','Challenging','assets/images/annapurna.png','A remote eastern Himalayan experience designed around permits and logistics.','budget-plan.php?trek=Kanchenjunga+Camp+Trek'],
-    ['Limi Valley Cultural Camp','Far-West Nepal','Tailored','Moderate','assets/images/footer-nepal-cultural.png','Camping, village encounters and quiet landscapes in a culturally distinct valley.','budget-plan.php?trek=Limi+Valley+Cultural+Camp'],
-  ],
-  'cycling' => [
-    ['Kathmandu Valley Ridge Cycling','Kathmandu Valley','3–5 days','Moderate','assets/images/footer-nepal-cultural.png','Village roads, heritage stops and green ridgelines around the Kathmandu Valley.','budget-plan.php?trek=Kathmandu+Valley+Ridge+Cycling'],
-    ['Lower Mustang Mountain Biking','Mustang Region','8 days','Challenging','assets/images/manaslu.png','High-desert tracks, river valleys and traditional settlements beneath the Annapurnas.','budget-plan.php?trek=Lower+Mustang+Mountain+Biking'],
-    ['Pokhara Hills Cycling','Pokhara Region','4 days','Easy–Moderate','assets/images/annapurna.png','Lakeside starts, rural lanes and wide Annapurna views at a relaxed pace.','budget-plan.php?trek=Pokhara+Hills+Cycling'],
-    ['Annapurna Mountain Bike Journey','Annapurna Region','Tailored','Challenging','assets/images/everest-hero.png','A demanding multi-day ride shaped around ability, support and trail conditions.','budget-plan.php?trek=Annapurna+Mountain+Bike+Journey'],
-  ],
-  'climbing' => [
-    ['Guided Peak Program','Nepal Himalaya','Tailored','Advanced','assets/images/everest-hero.png','A safety-led guided plan matched to experience, conditions and realistic objectives.','budget-plan.php?trek=Guided+Peak+Program'],
-    ['Everest Region Peak Journey','Everest Region','Tailored','Advanced','assets/images/everest-hero.png','A trekking and guided climbing program with deliberate acclimatization.','budget-plan.php?trek=Everest+Region+Peak+Journey'],
-    ['Mera Region Peak Journey','Makalu–Barun Region','Tailored','Advanced','assets/images/manaslu.png','A remote approach and guided summit program planned around the team.','budget-plan.php?trek=Mera+Region+Peak+Journey'],
-    ['Peak Recommendation','Nepal Himalaya','Custom','Assessment required','assets/images/annapurna.png','Not sure which objective fits? Start with experience, fitness and timing.','budget-plan.php?trek=Peak+Recommendation'],
-  ],
-  'culture' => [
-    ['Kathmandu Heritage Journey','Kathmandu Valley','1–3 days','Relaxed','assets/images/footer-nepal-cultural.png','Living heritage, courtyards, temples and local neighborhoods with a flexible pace.','budget-plan.php?trek=Kathmandu+Heritage+Journey'],
-    ['Bhutan Cultural Tour','Bhutan','Tailored','Relaxed','assets/images/annapurna.png','Monasteries, valleys and cultural encounters designed as a private journey.','budget-plan.php?trek=Bhutan+Cultural+Tour'],
-    ['Tibet Cultural Journey','Tibet','Tailored','Moderate','assets/images/manaslu.png','A considered high-plateau itinerary shaped around access and acclimatization.','budget-plan.php?trek=Tibet+Cultural+Journey'],
-    ['Nepal Village & Food Journey','Nepal','Tailored','Relaxed','assets/images/footer-nepal-cultural.png','Village life, regional food and landscape woven into a slower cultural route.','budget-plan.php?trek=Nepal+Village+Food+Journey'],
-  ],
+  'camping' => [],
 ];
 require __DIR__ . '/includes/header.php';
 ?>
 <section class="home-hero reference-hero">
-  <img src="<?= url('assets/images/everest-hero.png') ?>" class="reference-hero-image" alt="Trekkers walking beneath Himalayan peaks at dawn">
+  <!-- Royalty-free Mount Ama Dablam timelapse: Pexels video 29632693 by Chandra Man Dongol. -->
+  <video class="reference-hero-image reference-hero-video" data-hero-video autoplay muted loop playsinline preload="auto" aria-hidden="true">
+    <source src="<?= asset_url('assets/videos/ama-dablam-closeup.mp4') ?>" type="video/mp4">
+  </video>
   <div class="reference-hero-shade" aria-hidden="true"></div>
 
   <div class="site-shell reference-hero-inner">
@@ -90,17 +69,22 @@ require __DIR__ . '/includes/header.php';
   <div class="site-shell">
     <div class="platform-review-intro grid gap-7 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
       <div><p class="eyebrow text-pine">Featured journeys</p><h2 class="mt-3 font-display text-5xl text-ink md:text-7xl">Choose how you<br>meet the Himalaya.</h2></div>
-      <p class="max-w-2xl text-lg leading-8 lg:justify-self-end">Trek between high villages, camp in remote country, ride mountain trails, explore living culture or ask us to shape something entirely personal.</p>
+      <p class="max-w-2xl text-lg leading-8 lg:justify-self-end">Explore our Everest, Annapurna and Dolpo journeys. Dedicated camping programs are currently being prepared.</p>
     </div>
     <div class="offer-tabs mt-12" role="tablist" aria-label="Featured activity categories">
-      <button class="offer-tab active" data-offer-filter="trekking" role="tab" aria-selected="true" aria-controls="activity-panel-trekking"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M18 3c1 6-4 7-4 12 0 2 1 4 3 5-1-5 4-6 5-10 4 4 6 8 6 12a11 11 0 1 1-22 0c0-5 3-9 7-13-1 6 1 8 3 9-1-6 4-8 2-15Z"/></svg><span>Best Sellers for 2026</span></button>
-      <button class="offer-tab" data-offer-filter="camping" role="tab" aria-selected="false" aria-controls="activity-panel-camping"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m4 9 6-5h12l6 5-12 19L4 9Zm0 0h24M10 4l6 24 6-24"/></svg><span>Luxury &amp; Remote</span></button>
-      <button class="offer-tab" data-offer-filter="cycling" role="tab" aria-selected="false" aria-controls="activity-panel-cycling"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="8" cy="22" r="5"/><circle cx="24" cy="22" r="5"/><path d="M8 22l6-10 5 10H8l7-7h5M13 9h5"/></svg><span>Mountain Biking</span></button>
-      <button class="offer-tab" data-offer-filter="climbing" role="tab" aria-selected="false" aria-controls="activity-panel-climbing"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 26L12 9l5 8 4-11 8 20M11 12l3 1 2-3M21 9l3 3"/></svg><span>Peak Climbing</span></button>
-      <button class="offer-tab" data-offer-filter="culture" role="tab" aria-selected="false" aria-controls="activity-panel-culture"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27h22M8 27V14h16v13M6 14h20l-3-4H9l-3 4zM12 10l4-5 4 5M13 18v5m6-5v5"/></svg><span>Culture &amp; Tours</span></button>
+      <button class="offer-tab active" data-offer-filter="trekking" role="tab" aria-selected="true" aria-controls="activity-panel-trekking"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M18 3c1 6-4 7-4 12 0 2 1 4 3 5-1-5 4-6 5-10 4 4 6 8 6 12a11 11 0 1 1-22 0c0-5 3-9 7-13-1 6 1 8 3 9-1-6 4-8 2-15Z"/></svg><span>Trekking</span></button>
+      <button class="offer-tab" data-offer-filter="camping" role="tab" aria-selected="false" aria-controls="activity-panel-camping"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 26 16 5l12 21H4Zm6 0 6-11 6 11M16 5v10"/></svg><span>Camping <b>Coming Soon</b></span></button>
     </div>
     <?php foreach ($featuredActivities as $categoryKey => $items): ?>
     <div id="activity-panel-<?= e($categoryKey) ?>" class="offer-panel <?= $categoryKey === 'trekking' ? '' : 'hidden' ?>" data-offer-panel="<?= e($categoryKey) ?>" role="tabpanel">
+      <?php if ($categoryKey === 'camping'): ?>
+      <div class="activity-coming-soon">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 52 32 10l24 42H8Zm13 0 11-20 11 20M32 10v22"></path><path d="M4 52h56"></path></svg>
+        <p>Camping adventures</p>
+        <h3>Coming Soon</h3>
+        <span>We are preparing the route, logistics and safety details before publishing these journeys.</span>
+      </div>
+      <?php else: ?>
       <div class="offer-grid">
         <?php foreach ($items as $item): ?>
         <article class="offer-card">
@@ -114,6 +98,7 @@ require __DIR__ . '/includes/header.php';
         </article>
         <?php endforeach; ?>
       </div>
+      <?php endif; ?>
     </div>
     <?php endforeach; ?>
   </div>
@@ -245,52 +230,25 @@ require __DIR__ . '/includes/header.php';
   <div class="site-shell">
     <div class="destination-gallery-shell">
       <header class="destination-gallery-heading">
-        <p><span aria-hidden="true"></span>Unique experiences in Nepal &amp; beyond</p>
-        <h2 id="destination-gallery-title">Top Travel Destinations</h2>
+        <p><span aria-hidden="true"></span>Explore our destination photography</p>
+        <h2 id="destination-gallery-title">Destination Photo Albums</h2>
       </header>
 
-      <div class="destination-card-tabs" role="tablist" aria-label="Travel destinations">
-        <button class="destination-card-tab active" type="button" role="tab" aria-selected="true" aria-controls="destination-panel-nepal" data-destination-tab="nepal">
+      <div class="destination-card-tabs" aria-label="Destination photo albums">
+        <a class="destination-card-tab destination-album-link" href="<?= url('gallery.php#gallery-nepal') ?>" aria-label="Open the Nepal photo album">
           <img loading="lazy" src="<?= url('assets/images/footer-nepal-cultural.png') ?>" alt="Temple architecture and Himalayan mountains in Nepal">
-          <span><strong>Nepal</strong><small>4 regions</small></span>
-        </button>
-        <button class="destination-card-tab" type="button" role="tab" aria-selected="false" aria-controls="destination-panel-bhutan" data-destination-tab="bhutan" tabindex="-1">
+          <span><strong>Nepal</strong><small>4 photos</small><b>View album <i aria-hidden="true">&rarr;</i></b></span>
+        </a>
+        <a class="destination-card-tab destination-album-link" href="<?= url('gallery.php#gallery-bhutan') ?>" aria-label="Open the Bhutan photo album">
           <img loading="lazy" src="<?= asset_url('assets/images/bhutan-tigers-nest.png') ?>" alt="Tiger's Nest monastery on a forested cliff in Bhutan">
-          <span><strong>Bhutan</strong><small>1 highlight</small></span>
-        </button>
-        <button class="destination-card-tab" type="button" role="tab" aria-selected="false" aria-controls="destination-panel-tibet" data-destination-tab="tibet" tabindex="-1">
+          <span><strong>Bhutan</strong><small>1 photo</small><b>View album <i aria-hidden="true">&rarr;</i></b></span>
+        </a>
+        <a class="destination-card-tab destination-album-link" href="<?= url('gallery.php#gallery-tibet') ?>" aria-label="Open the Tibet photo album">
           <img loading="lazy" src="<?= asset_url('assets/images/tibet-plateau.png') ?>" alt="Road, chorten and snowy mountains on the Tibetan plateau">
-          <span><strong>Tibet</strong><small>1 highlight</small></span>
-        </button>
+          <span><strong>Tibet</strong><small>1 photo</small><b>View album <i aria-hidden="true">&rarr;</i></b></span>
+        </a>
       </div>
 
-      <div id="destination-panel-nepal" class="destination-detail-panel" role="tabpanel" data-destination-panel="nepal">
-        <div class="destination-detail-heading"><div><span>Explore Nepal</span><h3>Choose a region</h3></div><p>Select a picture to view it full screen.</p></div>
-        <div class="destination-region-grid">
-          <button class="destination-region-card" data-gallery-item data-src="<?= url('assets/images/everest-hero.png') ?>" data-caption="Everest region — the trail at first light"><img loading="lazy" src="<?= url('assets/images/everest-hero.png') ?>" alt="Trekkers beneath Himalayan peaks at dawn"><span><strong>Everest</strong><small>High mountain trails</small></span></button>
-          <button class="destination-region-card" data-gallery-item data-src="<?= url('assets/images/annapurna.png') ?>" data-caption="Annapurna region — rhododendron forest and stone paths"><img loading="lazy" src="<?= url('assets/images/annapurna.png') ?>" alt="Annapurna mountain above a rhododendron valley"><span><strong>Annapurna</strong><small>Forest to sanctuary</small></span></button>
-          <button class="destination-region-card" data-gallery-item data-src="<?= url('assets/images/manaslu.png') ?>" data-caption="Manaslu region — river valley, prayer flags and remote trails"><img loading="lazy" src="<?= url('assets/images/manaslu.png') ?>" alt="Remote Manaslu valley with prayer flags and a stone trail"><span><strong>Manaslu</strong><small>Remote mountain country</small></span></button>
-          <button class="destination-region-card" data-gallery-item data-src="<?= url('assets/images/footer-nepal-cultural.png') ?>" data-caption="Kathmandu and Nepal culture — temples, village trails and Himalayan light"><img loading="lazy" src="<?= url('assets/images/footer-nepal-cultural.png') ?>" alt="Nepal mountain culture with temple architecture and Himalayan peaks"><span><strong>Kathmandu</strong><small>Culture and heritage</small></span></button>
-        </div>
-      </div>
-
-      <div id="destination-panel-bhutan" class="destination-detail-panel hidden" role="tabpanel" data-destination-panel="bhutan">
-        <div class="destination-detail-heading"><div><span>Explore Bhutan</span><h3>Paro &amp; Tiger&rsquo;s Nest</h3></div><p>Select the picture to view it full screen.</p></div>
-        <div class="destination-region-grid destination-region-grid-single">
-          <button class="destination-region-card" data-gallery-item data-src="<?= asset_url('assets/images/bhutan-tigers-nest.png') ?>" data-caption="Bhutan — Paro Taktsang, the Tiger's Nest monastery"><img loading="lazy" src="<?= asset_url('assets/images/bhutan-tigers-nest.png') ?>" alt="Tiger's Nest monastery built into a forested cliff in Bhutan"><span><strong>Tiger&rsquo;s Nest</strong><small>Paro, Bhutan</small></span></button>
-        </div>
-      </div>
-
-      <div id="destination-panel-tibet" class="destination-detail-panel hidden" role="tabpanel" data-destination-panel="tibet">
-        <div class="destination-detail-heading"><div><span>Explore Tibet</span><h3>The high plateau</h3></div><p>Select the picture to view it full screen.</p></div>
-        <div class="destination-region-grid destination-region-grid-single">
-          <button class="destination-region-card" data-gallery-item data-src="<?= asset_url('assets/images/tibet-plateau.png') ?>" data-caption="Tibet — high plateau road, chorten and snow-covered Himalaya"><img loading="lazy" src="<?= asset_url('assets/images/tibet-plateau.png') ?>" alt="Road leading across the Tibetan plateau toward snowy Himalayan mountains"><span><strong>Tibetan Plateau</strong><small>Mountains and open country</small></span></button>
-        </div>
-      </div>
-
-      <div class="destination-gallery-action">
-        <a href="<?= url('gallery.php') ?>">View all photos <span aria-hidden="true">→</span></a>
-      </div>
     </div>
   </div>
 </section>

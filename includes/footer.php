@@ -74,7 +74,7 @@
         </div>
       </div>
 
-      <section class="footer-trust-connect" aria-label="Travel platforms and contact channels">
+      <section class="footer-trust-connect" aria-label="Travel platforms and social media">
         <div class="footer-platform-list">
           <h2>Find us on:</h2>
           <a class="footer-platform footer-platform-google" href="<?= e(SITE['google_reviews_url']) ?>" target="_blank" rel="noopener"><span>G</span>Google Reviews</a>
@@ -83,16 +83,16 @@
           <a class="footer-platform" href="https://trade.ntb.gov.np/useful_contacts/tin-tin-trekking-adventure-p-ltd/" target="_blank" rel="noopener"><span>◆</span>Nepal Tourism Board</a>
         </div>
 
-        <div class="footer-connect-list">
-          <h2>Connect with us:</h2>
-          <a class="footer-connect-button footer-connect-whatsapp" href="<?= e(whatsapp_url()) ?>" target="_blank" rel="noopener" aria-label="WhatsApp Tin-Tin Trekking">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.7a8 8 0 0 1-11.8 7L4 20l1.3-4A8 8 0 1 1 20 11.7Z"/><path d="M9 8.5c.6 2.2 2.1 3.7 4.5 4.5l1-1 2 .8c-.2 1.5-1.2 2.3-2.7 2.2-3.9-.3-7-3.4-7.3-7.3-.1-1.5.7-2.5 2.2-2.7l.8 2-1 1Z"/></svg>
+        <div class="footer-social-list">
+          <h2>Follow us on:</h2>
+          <a class="footer-social-button" href="<?= e(SITE['instagram_url']) ?>" target="_blank" rel="noopener" aria-label="Find Tin-Tin Trekking on Instagram">
+            <img src="<?= asset_url('assets/images/social/instagram.svg') ?>" alt="Instagram">
           </a>
-          <a class="footer-connect-button footer-connect-email" href="mailto:<?= e(SITE['email']) ?>" aria-label="Email Tin-Tin Trekking">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+          <a class="footer-social-button" href="<?= e(SITE['tiktok_url']) ?>" target="_blank" rel="noopener" aria-label="Find Tin-Tin Trekking on TikTok">
+            <img src="<?= asset_url('assets/images/social/tiktok.svg') ?>" alt="TikTok">
           </a>
-          <a class="footer-connect-button footer-connect-phone" href="tel:+9779851044230" aria-label="Call Tin-Tin Trekking">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3 4 5c0 8 7 15 15 15l2-3-4-3-2 2c-3-1-6-4-7-7l2-2-3-4Z"/></svg>
+          <a class="footer-social-button" href="<?= e(SITE['facebook_url']) ?>" target="_blank" rel="noopener" aria-label="Find Tin-Tin Trekking on Facebook">
+            <img src="<?= asset_url('assets/images/social/facebook.svg') ?>" alt="Facebook">
           </a>
         </div>
       </section>
@@ -137,6 +137,10 @@
 <a href="<?= e(whatsapp_url()) ?>" target="_blank" rel="noopener" class="tin-footer-whatsapp fixed bottom-5 left-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_rgba(12,45,72,.25)] transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2" aria-label="Chat with Tin-Tin Trekking on WhatsApp">
   <svg class="h-7 w-7" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path fill="currentColor" d="M16 3.5A12.4 12.4 0 0 0 5.34 22.2L3.5 28.5l6.48-1.7A12.48 12.48 0 1 0 16 3.5Zm0 22.67c-1.9 0-3.76-.52-5.37-1.5l-.38-.23-3.84 1.01 1.03-3.75-.25-.39A10.14 10.14 0 1 1 16 26.17Zm5.56-7.6c-.3-.16-1.8-.9-2.09-.99-.28-.1-.49-.15-.7.15-.2.3-.78.98-.96 1.18-.18.2-.36.23-.67.08-.3-.15-1.28-.47-2.44-1.51a9.13 9.13 0 0 1-1.69-2.1c-.18-.3-.02-.47.13-.62.14-.13.31-.35.46-.53.15-.18.2-.3.3-.51.11-.2.06-.38-.02-.53-.08-.15-.7-1.68-.95-2.3-.25-.61-.51-.52-.7-.53h-.6c-.2 0-.53.08-.81.38-.28.3-1.07 1.05-1.07 2.56 0 1.51 1.1 2.97 1.25 3.17.15.2 2.16 3.3 5.24 4.63.73.31 1.3.5 1.75.64.74.23 1.4.2 1.93.12.6-.09 1.8-.74 2.06-1.45.26-.72.26-1.33.18-1.46-.07-.12-.27-.2-.57-.36Z"/></svg>
 </a>
+<?php if (!empty($includeLeaflet)): ?>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="<?= asset_url('assets/js/route-map.js') ?>" defer></script>
+<?php endif; ?>
 <script src="<?= asset_url('assets/js/site.js') ?>" defer></script>
 <script
   src="<?= asset_url('chatbot/chat-widget.js') ?>"

@@ -24,6 +24,9 @@ $pageDescription = $pageDescription ?? 'Personalized Himalayan adventures design
   <link rel="stylesheet" href="<?= asset_url('assets/css/footer.css') ?>">
   <link rel="stylesheet" href="<?= asset_url('assets/css/polish.css') ?>">
   <link rel="stylesheet" href="<?= asset_url('chatbot/chat-widget.css') ?>">
+  <?php if (!empty($includeLeaflet)): ?>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <?php endif; ?>
 </head>
 <body class="bg-white text-slate-700 antialiased">
 <a href="#main" class="skip-link">Skip to content</a>
@@ -35,27 +38,28 @@ $pageDescription = $pageDescription ?? 'Personalized Himalayan adventures design
 </div>
 <header id="site-header" class="sticky top-0 z-50 border-b border-slate-200/70 bg-white/95 backdrop-blur-xl">
   <div class="site-shell flex h-[74px] items-center gap-7">
-    <a href="<?= url('index.php') ?>" class="brand-lockup shrink-0" aria-label="Tin-Tin Trekking home"><img src="<?= url('assets/images/tin-tin-logo.png') ?>" class="h-[62px] w-[118px] object-contain" alt="Tin-Tin Trekking & Adventure logo"></a>
-    <nav class="desktop-nav hidden flex-1 items-center justify-center gap-5 xl:flex" aria-label="Main navigation">
-      <button class="nav-trigger" aria-expanded="false">Destinations <span>⌄</span></button>
-      <a href="<?= url('index.php#treks') ?>">Trekking in Nepal</a><a href="<?= url('index.php#treks') ?>">Activities</a><a href="<?= url('index.php#comfort') ?>">Travel Style</a><a href="<?= url('about.php') ?>">Company</a><a href="<?= url('index.php#journal') ?>">Travel Info</a><a href="<?= url('contact.php') ?>">Contact</a>
+    <a href="<?= url('index.php') ?>" class="brand-lockup shrink-0" aria-label="Tin-Tin Trekking home"><img src="<?= asset_url('assets/images/tin-tin-logo.png') ?>" class="h-[62px] w-[118px] object-contain" alt="Tin-Tin Trekking & Adventure logo"></a>
+    <nav class="desktop-nav hidden flex-1 items-center justify-center gap-7 xl:flex" aria-label="Main navigation">
+      <a href="<?= url('gallery.php') ?>">Destinations</a>
+      <a href="<?= url('index.php#treks') ?>">Trekking in Nepal</a>
+      <a href="<?= url('about.php') ?>">About</a>
+      <a href="<?= url('contact.php') ?>">Contact</a>
     </nav>
     <div class="ml-auto hidden items-center gap-3 xl:flex">
       <a class="header-whatsapp" href="<?= e(whatsapp_url()) ?>" target="_blank" rel="noopener"><span class="status-dot"></span>WhatsApp</a>
       <a class="btn-primary header-cta text-xs" href="<?= url('budget-plan.php') ?>">Get My Budget Plan <span aria-hidden="true">↗</span></a>
     </div>
-    <button id="menu-button" class="menu-button ml-auto xl:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <button id="menu-button" class="menu-button ml-auto xl:hidden" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
-  <div id="mega-menu" class="mega-menu hidden border-t border-slate-200 bg-white shadow-xl">
-    <div class="site-shell grid gap-8 py-8 md:grid-cols-4">
-      <div><p class="menu-title">Nepal</p><a href="<?= url('index.php#treks') ?>">Everest Region</a><a href="<?= url('index.php#treks') ?>">Annapurna Region</a><a href="<?= url('index.php#treks') ?>">Langtang Region</a><a href="<?= url('index.php#treks') ?>">Manaslu Region</a></div>
-      <div><p class="menu-title">Bhutan & Tibet</p><a href="<?= url('index.php#destinations') ?>">Bhutan Treks</a><a href="<?= url('index.php#destinations') ?>">Cultural Tours</a><a href="<?= url('index.php#destinations') ?>">Tibet Trekking</a><a href="<?= url('index.php#destinations') ?>">Tibet Tours</a></div>
-      <div><p class="menu-title">Activities</p><a href="<?= url('index.php#treks') ?>">Peak Climbing</a><a href="<?= url('index.php#treks') ?>">Luxury Treks</a><a href="<?= url('index.php#treks') ?>">Mountain Biking</a><a href="<?= url('index.php#treks') ?>">Day Trips</a></div>
-      <div class="mega-feature p-6"><p class="menu-title">Not sure where to start?</p><p class="mb-4 text-sm leading-6">Tell us your goals and budget. We’ll recommend a practical route.</p><a class="font-bold text-pine" href="<?= url('budget-plan.php') ?>">Build my plan →</a></div>
-    </div>
-  </div>
+
   <div id="mobile-menu" class="hidden max-h-[calc(100vh-76px)] overflow-y-auto border-t bg-white xl:hidden">
-    <nav class="site-shell flex flex-col py-5 text-lg font-semibold"><a href="<?= url('index.php#destinations') ?>">Destinations</a><a href="<?= url('index.php#treks') ?>">Trekking</a><a href="<?= url('index.php#treks') ?>">Climbing & Tours</a><a href="<?= url('index.php#comfort') ?>">Luxury</a><a href="<?= url('about.php') ?>">About</a><a href="<?= url('contact.php') ?>">Contact</a><a class="btn-primary mt-4 text-center" href="<?= url('budget-plan.php') ?>">Get My Budget Plan</a></nav>
+    <nav class="site-shell flex flex-col py-5 text-lg font-semibold">
+      <a href="<?= url('gallery.php') ?>">Destinations</a>
+      <a href="<?= url('index.php#treks') ?>">Trekking in Nepal</a>
+      <a href="<?= url('about.php') ?>">About</a>
+      <a href="<?= url('contact.php') ?>">Contact</a>
+      <a class="btn-primary mt-4 text-center" href="<?= url('budget-plan.php') ?>">Get My Budget Plan</a>
+    </nav>
   </div>
 </header>
 <main id="main">
