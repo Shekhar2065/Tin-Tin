@@ -1,0 +1,27 @@
+Options -Indexes
+ServerSignature Off
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Never expose repository metadata, local configuration, or generated tool state.
+  # Keep .well-known available for certificate validation.
+  RewriteRule "(^|/)\.(?!well-known(?:/|$))" - [F,L,NC]
+  RewriteRule "(^|/)(?:node_modules|vendor|coverage|tmp|temp)(?:/|$)" - [F,L,NC]
+  RewriteRule "^(?:includes|data|database)(?:/|$)" - [F,L,NC]
+  RewriteRule "^chatbot/(?:worker\.js|wrangler\.toml)$" - [F,L,NC]
+</IfModule>
+
+<IfModule mod_alias.c>
+  RedirectMatch 404 "(?i)(^|/)(?:\.git|\.wrangler|\.github|\.agents|\.codex)(?:/|$)"
+</IfModule>
+
+<FilesMatch "(?i)(?:^composer\.(?:json|lock)$|^package(?:-lock)?\.json$|^wrangler\.toml$|^phpunit\.xml(?:\.dist)?$|\.(?:sql|toml|map|log|bak|backup|ini|dist|yml|yaml|md)$)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>

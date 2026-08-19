@@ -1,7 +1,50 @@
+# Local environment and credentials
 .env
 .env.*
-.DS_Store
-Thumbs.db
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Generated Cloudflare Wrangler state and deployment bundles
+**/.wrangler/
+
+# Dependencies and tool caches
+node_modules/
+vendor/
+.phpunit.cache/
+.phpunit.result.cache
+coverage/
+.cache/
+tmp/
+temp/
+
+# Logs and local runtime output
 *.log
+*.pid
+*.dump
+*.sql.gz
+*.sqlite
+*.sqlite3
+*.db
+database/*.sql
+!database/schema.sql
+
+# Private keys and certificate bundles
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+
+# Editors and operating systems
 .vscode/
 .idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+Desktop.ini

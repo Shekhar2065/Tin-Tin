@@ -142,10 +142,13 @@
   <script src="<?= asset_url('assets/js/route-map.js') ?>" defer></script>
 <?php endif; ?>
 <script src="<?= asset_url('assets/js/site.js') ?>" defer></script>
+<?php $chatEndpoint = chat_endpoint(); ?>
+<?php if ($chatEndpoint !== ''): ?>
 <script
   src="<?= asset_url('chatbot/chat-widget.js') ?>"
-  data-chat-endpoint="https://tin-tin-website-chat.thapasther101.workers.dev/chat"
+  data-chat-endpoint="<?= e($chatEndpoint) ?>"
   data-greeting="Namaste! How can I help you plan your Himalayan trip?"
   defer
 ></script>
+<?php endif; ?>
 </body></html>

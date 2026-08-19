@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/config.php';
+send_security_headers();
 $pageTitle = $pageTitle ?? 'Personalized Himalayan Treks';
 $pageDescription = $pageDescription ?? 'Personalized Himalayan adventures designed around your budget, travel style, comfort and goals.';
 ?>
